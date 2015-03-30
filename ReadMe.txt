@@ -1,1 +1,0 @@
-Git repo for our EECS 493 Catchphrase game

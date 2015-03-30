@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Game" representedClassName="Game" syncable="YES">
+        <attribute name="game_finished" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="game_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="game_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="game_started" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="losingPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="lostGames" inverseEntity="Team" syncable="YES"/>
+        <relationship name="otherPlayers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="inProgressGames" inverseEntity="Team" syncable="YES"/>
+        <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="game" inverseEntity="Round" syncable="YES"/>
+        <relationship name="winningPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="wonGames" inverseEntity="Team" syncable="YES"/>
+    </entity>
+    <entity name="Round" representedClassName="Round" syncable="YES">
+        <attribute name="round_finished" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="round_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="round_started" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="rounds" inverseEntity="Game" syncable="YES"/>
+        <relationship name="losingPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="lostRounds" inverseEntity="Team" syncable="YES"/>
+        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="round" inverseEntity="Word" syncable="YES"/>
+    </entity>
+    <entity name="Team" representedClassName="Team" syncable="YES">
+        <attribute name="team_desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="team_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="team_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="inProgressGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="otherPlayers" inverseEntity="Game" syncable="YES"/>
+        <relationship name="lostGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="losingPlayer" inverseEntity="Game" syncable="YES"/>
+        <relationship name="lostRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="losingPlayer" inverseEntity="Round" syncable="YES"/>
+        <relationship name="wonGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="winningPlayer" inverseEntity="Game" syncable="YES"/>
+    </entity>
+    <entity name="Word" representedClassName="Word" syncable="YES">
+        <attribute name="the_word" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="round" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Round" inverseName="words" inverseEntity="Round" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Game" positionX="-2360" positionY="-1971" width="128" height="163"/>
+        <element name="Team" positionX="-2619" positionY="-1971" width="128" height="148"/>
+        <element name="Round" positionX="-2619" positionY="-1764" width="128" height="133"/>
+        <element name="Word" positionX="-2367" positionY="-1759" width="128" height="88"/>
+    </elements>
+</model>
