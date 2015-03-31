@@ -66,7 +66,6 @@
     self.timerControlLabel.textColor = [[Constants instance] LIGHT_TEXT];
     self.scoreControlLabel.textColor = [[Constants instance] LIGHT_TEXT];
     
-    
     // Control setup
     self.timeSlider.minimumValue = 10.0f;
     self.timeSlider.maximumValue = 120.0f;
@@ -78,7 +77,8 @@
     self.timeSlider.value = [Constants timerLength].floatValue;
     self.timerControlLabel.text = [NSString stringWithFormat:@"%d sec", (int)self.timeSlider.value];
     self.scoreStepper.value = [Constants scoreToWin].floatValue;
-    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d pts", (int)self.scoreStepper.value];
+    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d pt%@", (int)self.scoreStepper.value,
+                                        (self.scoreStepper.value==1) ? @"" : @"s"];
     self.vibrateSwitch.on = [Constants isVibrateOn];
     self.easySwitch.on = [Constants isEasyOn];
     self.mediumSwitch.on = [Constants isModerateOn];

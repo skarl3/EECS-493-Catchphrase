@@ -24,4 +24,10 @@
     self.mainLabel.textColor = [[Constants instance] EXTRA_LIGHT_TEXT];
 }
 
+- (void) setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    self.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor clearColor];
+}
+
 @end

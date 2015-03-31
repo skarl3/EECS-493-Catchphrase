@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) Team *currentTeam;
 @property (nonatomic, strong) IBOutlet UIButton *moreButton;
+@property (strong, nonatomic) IBOutlet UILabel *addedLabel;
 @property (nonatomic, weak) id<TeamCellDelegate> delegate;
 
 - (void) configureCellWithTeam:(Team*)team;

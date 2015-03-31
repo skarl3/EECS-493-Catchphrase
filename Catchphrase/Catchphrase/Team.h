@@ -21,6 +21,9 @@
 @property (nonatomic, retain) NSSet *inProgressGames;
 @property (nonatomic, retain) NSSet *lostRounds;
 
+// Non Core Data
+@property (nonatomic, strong, readonly) NSString *statsString;
+
 + (Team*) teamWithID:(NSString*)team_id;
 + (Team*) newTeamWithName:(NSString*)name
            andDescription:(NSString*)description;

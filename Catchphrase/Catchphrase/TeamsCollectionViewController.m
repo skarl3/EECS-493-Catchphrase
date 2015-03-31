@@ -30,9 +30,6 @@
 
 @implementation TeamsCollectionViewController
 
-static NSString * const TeamCellIdentifier = @"TeamCell";
-static NSString * const NewTeamCellIdentifier = @"NewTeamCell";
-
 - (id) initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -203,7 +200,77 @@ static NSString * const NewTeamCellIdentifier = @"NewTeamCell";
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Segue
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    
+    if(indexPath==NEW_CELL_IDXPATH) {
+        [self showAlertForNewTeam];
+    }
+    
+    else {
+        // Show team info
+    }
+}
+
+- (void) showAlertForNewTeam
+{
+    // Make a new team
+    NSString *alertTitle = @"New Team";
+    NSString *alertMessage = @"Give your new team a name and, optionally, a description.";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                             message:alertMessage
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Team name";
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:textField];
+    }];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Team description (optional)";
+    }];
+    
+    void (^detachTextListener)() = ^void() {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UITextFieldTextDidChangeNotification
+                                                      object:nil];
+    };
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                     style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction *action) {
+                                                       detachTextListener();
+                                                   }];
+    
+    UIAlertAction *create = [UIAlertAction actionWithTitle:@"Create"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       detachTextListener();
+                                                       UITextField *nameField = alertController.textFields.firstObject;
+                                                       UITextField *descField = alertController.textFields.lastObject;
+                                                       Team *newTeam = [Team newTeamWithName:nameField.text andDescription:descField.text];
+                                                       NSLog(@"Created new team: %@", newTeam.team_name);
+                                                   }];
+    
+    [alertController addAction:cancel];
+    [alertController addAction:create];
+    
+    create.enabled = NO;
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void) alertTextFieldDidChange:(NSNotification *)notification
+{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController)
+    {
+        UITextField *login = alertController.textFields.firstObject;
+        UIAlertAction *okAction = alertController.actions.lastObject;
+        okAction.enabled = login.text.length > 2;
+    }
 }
 
 #pragma mark - Core Data

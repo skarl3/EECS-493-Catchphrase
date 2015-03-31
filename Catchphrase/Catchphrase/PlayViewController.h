@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Game.h"
 
 @interface PlayViewController : UIViewController
+
+@property (strong, nonatomic) Game *currentGame;
 
 @end

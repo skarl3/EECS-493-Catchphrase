@@ -12,6 +12,9 @@
 extern NSString *SegueToStartGameIdentifier;
 extern NSString *SegueToPlayGameIdentifier;
 
+extern NSString * const TeamCellIdentifier;
+extern NSString * const NewTeamCellIdentifier;
+
 @interface Constants : NSObject
 
 + (Constants*) instance;

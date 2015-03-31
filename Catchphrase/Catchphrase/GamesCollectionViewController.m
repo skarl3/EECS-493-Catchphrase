@@ -157,14 +157,14 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
 
 - (void) didTapMoreOnCell:(GameCollectionViewCell *)cell
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:cell.currentGame.game_name
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:cell.currentGame.gameName
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction *action) {
-                                                             NSLog(@"Cancel action");
+                                                             //
                                                          }];
     
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"

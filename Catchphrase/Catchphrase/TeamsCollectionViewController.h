@@ -14,4 +14,6 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedTeamsController;
 
+- (void) showAlertForNewTeam;
+
 @end

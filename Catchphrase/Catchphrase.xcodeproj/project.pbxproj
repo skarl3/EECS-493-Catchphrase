@@ -14,7 +14,6 @@
 		342E1D261AC97ED400DFD364 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D251AC97ED400DFD364 /* Constants.m */; };
 		342E1D2A1AC97FD000DFD364 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D281AC97FD000DFD364 /* Model.xcdatamodeld */; };
 		342E1D3A1AC9831C00DFD364 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D391AC9831C00DFD364 /* Model.m */; };
-		342E1D3D1AC985B400DFD364 /* StartGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D3C1AC985B400DFD364 /* StartGameTableViewController.m */; };
 		342E1D401AC98BA300DFD364 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D3F1AC98BA300DFD364 /* Round.m */; };
 		342E1D461AC98BA400DFD364 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D451AC98BA400DFD364 /* Game.m */; };
 		342E1D491AC98BA400DFD364 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D481AC98BA400DFD364 /* Team.m */; };
@@ -24,6 +23,7 @@
 		342E1D601AC9A17E00DFD364 /* GameCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D5F1AC9A17E00DFD364 /* GameCollectionViewCell.m */; };
 		342E1D631AC9A18600DFD364 /* TeamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D621AC9A18600DFD364 /* TeamCollectionViewCell.m */; };
 		342E1D661AC9B6D000DFD364 /* GenericCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D651AC9B6D000DFD364 /* GenericCollectionViewCell.m */; };
+		34A928D81ACA0B62002EA7EA /* StartCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */; };
 		34CF0FD41AC97D4E008DBF60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CF0FD31AC97D4E008DBF60 /* main.m */; };
 		34CF0FD71AC97D4E008DBF60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CF0FD61AC97D4E008DBF60 /* AppDelegate.m */; };
 		34CF0FE01AC97D4E008DBF60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34CF0FDE1AC97D4E008DBF60 /* Main.storyboard */; };
@@ -58,8 +58,6 @@
 		342E1D291AC97FD000DFD364 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		342E1D381AC9831C00DFD364 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		342E1D391AC9831C00DFD364 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
-		342E1D3B1AC985B400DFD364 /* StartGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartGameTableViewController.h; sourceTree = "<group>"; };
-		342E1D3C1AC985B400DFD364 /* StartGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartGameTableViewController.m; sourceTree = "<group>"; };
 		342E1D3E1AC98BA300DFD364 /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Round.h; sourceTree = "<group>"; };
 		342E1D3F1AC98BA300DFD364 /* Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Round.m; sourceTree = "<group>"; };
 		342E1D441AC98BA400DFD364 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
@@ -78,6 +76,8 @@
 		342E1D621AC9A18600DFD364 /* TeamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCollectionViewCell.m; sourceTree = "<group>"; };
 		342E1D641AC9B6D000DFD364 /* GenericCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericCollectionViewCell.h; sourceTree = "<group>"; };
 		342E1D651AC9B6D000DFD364 /* GenericCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericCollectionViewCell.m; sourceTree = "<group>"; };
+		34A928D61ACA0B62002EA7EA /* StartCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCollectionViewController.h; sourceTree = "<group>"; };
+		34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCollectionViewController.m; sourceTree = "<group>"; };
 		34CF0FCE1AC97D4E008DBF60 /* Catchphrase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catchphrase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF0FD21AC97D4E008DBF60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34CF0FD31AC97D4E008DBF60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -138,8 +138,8 @@
 		342E1D201AC97EAF00DFD364 /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				342E1D3B1AC985B400DFD364 /* StartGameTableViewController.h */,
-				342E1D3C1AC985B400DFD364 /* StartGameTableViewController.m */,
+				34A928D61ACA0B62002EA7EA /* StartCollectionViewController.h */,
+				34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */,
 				342E1D1C1AC97EA200DFD364 /* PlayViewController.h */,
 				342E1D1D1AC97EA200DFD364 /* PlayViewController.m */,
 			);
@@ -427,6 +427,7 @@
 				342E1D571AC993BE00DFD364 /* UIView+Additions.m in Sources */,
 				342E1D1B1AC97E9000DFD364 /* SettingsTableViewController.m in Sources */,
 				342E1D601AC9A17E00DFD364 /* GameCollectionViewCell.m in Sources */,
+				34A928D81ACA0B62002EA7EA /* StartCollectionViewController.m in Sources */,
 				342E1D2A1AC97FD000DFD364 /* Model.xcdatamodeld in Sources */,
 				34CF0FD41AC97D4E008DBF60 /* main.m in Sources */,
 				342E1D401AC98BA300DFD364 /* Round.m in Sources */,
@@ -435,7 +436,6 @@
 				342E1D3A1AC9831C00DFD364 /* Model.m in Sources */,
 				342E1D661AC9B6D000DFD364 /* GenericCollectionViewCell.m in Sources */,
 				342E1D5D1AC99FDA00DFD364 /* GridLayout.m in Sources */,
-				342E1D3D1AC985B400DFD364 /* StartGameTableViewController.m in Sources */,
 				342E1D491AC98BA400DFD364 /* Team.m in Sources */,
 				342E1D181AC97E8300DFD364 /* TeamsCollectionViewController.m in Sources */,
 				342E1D521AC98FC800DFD364 /* Word.m in Sources */,

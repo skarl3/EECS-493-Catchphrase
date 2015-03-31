@@ -46,9 +46,7 @@
     }
     
     if(teams) {
-        for(Team *t in teams) {
-            [game addOtherPlayersObject:t];
-        }
+        game.otherPlayers = [NSSet setWithArray:teams];
     }
     
     game.game_started = [NSDate new];
@@ -57,6 +55,35 @@
     [Model saveContext];
     
     return game;
+}
+
+- (NSInteger) numberOfPlayers
+{
+    NSInteger count = 0;
+    if(self.winningPlayer) count++;
+    if(self.losingPlayer) count++;
+    count += self.otherPlayers.count;
+    return count;
+}
+
+- (NSString*) gameName
+{
+    if(self.game_name && ![self.game_name isEqualToString:@""]) {
+        return self.game_name;
+    }
+    
+    else {
+        NSMutableArray *teams = [self.otherPlayers.allObjects mutableCopy];
+        if(self.winningPlayer) {
+            [teams addObject:self.winningPlayer];
+        }
+        
+        if(self.losingPlayer) {
+            [teams addObject:self.losingPlayer];
+        }
+        
+        return [teams componentsJoinedByString:@" vs. "];
+    }
 }
 
 @end

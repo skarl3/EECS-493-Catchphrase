@@ -7,7 +7,7 @@
         <attribute name="game_started" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="losingPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="lostGames" inverseEntity="Team" syncable="YES"/>
         <relationship name="otherPlayers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="inProgressGames" inverseEntity="Team" syncable="YES"/>
-        <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="game" inverseEntity="Round" syncable="YES"/>
+        <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Round" inverseName="game" inverseEntity="Round" syncable="YES"/>
         <relationship name="winningPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="wonGames" inverseEntity="Team" syncable="YES"/>
     </entity>
     <entity name="Round" representedClassName="Round" syncable="YES">
@@ -16,7 +16,7 @@
         <attribute name="round_started" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="rounds" inverseEntity="Game" syncable="YES"/>
         <relationship name="losingPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="lostRounds" inverseEntity="Team" syncable="YES"/>
-        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="round" inverseEntity="Word" syncable="YES"/>
+        <relationship name="words" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Word" inverseName="round" inverseEntity="Word" syncable="YES"/>
     </entity>
     <entity name="Team" representedClassName="Team" syncable="YES">
         <attribute name="team_desc" optional="YES" attributeType="String" syncable="YES"/>
@@ -34,8 +34,8 @@
     </entity>
     <elements>
         <element name="Game" positionX="-2360" positionY="-1971" width="128" height="163"/>
-        <element name="Team" positionX="-2619" positionY="-1971" width="128" height="148"/>
         <element name="Round" positionX="-2619" positionY="-1764" width="128" height="133"/>
+        <element name="Team" positionX="-2619" positionY="-1971" width="128" height="148"/>
         <element name="Word" positionX="-2367" positionY="-1759" width="128" height="88"/>
     </elements>
 </model>

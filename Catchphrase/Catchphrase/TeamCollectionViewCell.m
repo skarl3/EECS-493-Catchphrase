@@ -8,6 +8,7 @@
 
 #import "TeamCollectionViewCell.h"
 #import "Constants.h"
+#import "UIView+Additions.h"
 
 @interface TeamCollectionViewCell()
 
@@ -31,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusLeftConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusTopConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addedLabelHeightConstraint;
 
 @end
 
@@ -74,6 +76,13 @@
     self.nameLabel.numberOfLines = 0;
     self.nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
+    // Added label
+    self.addedLabel.font = [UIFont fontWithName:[Constants boldFont]
+                                           size:[Constants smallBodyTextSize]];
+    self.addedLabel.textColor = [UIColor whiteColor];
+    self.addedLabel.backgroundColor = [[Constants instance] LIGHT_BLUE];
+    self.addedLabelHeightConstraint.constant = 0;
+    
     // More button
     [self.moreButton setImage:[Constants moreHorizontal] forState:UIControlStateNormal];
     self.moreButton.tintColor = [[Constants instance] EXTRA_LIGHT_TEXT];
@@ -89,6 +98,29 @@
 - (void) configureCellWithTeam:(Team*)team
 {
     _currentTeam = team;
+    
+    self.nameLabel.text = team.team_name;
+    self.statusLabel.text = team.statsString;
+}
+
+// Selection
+
+- (void) setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    
+    self.addedLabelHeightConstraint.constant = (selected) ? [Constants controlBarHeight] : 0;
+    [self animateLayoutIfNeededWithBounce:YES
+                                  options:0
+                               animations:nil];
+}
+
+- (void) setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    
+    self.topArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
+    self.bottomArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
 }
 
 @end

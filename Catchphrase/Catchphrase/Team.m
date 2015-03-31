@@ -22,6 +22,8 @@
 @dynamic inProgressGames;
 @dynamic lostRounds;
 
+@synthesize statsString = _statsString;
+
 + (Team*) teamWithID:(NSString*)team_id
 {
     if([team_id isEqualToString:@""] || !team_id || [team_id isEqual:[NSNull null]]) {
@@ -53,6 +55,40 @@
     [Model saveContext];
     
     return team;
+}
+
+- (NSString*) statsString
+{
+    NSInteger numWins = self.wonGames.count;
+    NSInteger numLosses = self.lostGames.count;
+    NSInteger numInProgress = self.inProgressGames.count;
+    
+    NSMutableArray *components = [NSMutableArray new];
+    
+    if(numWins==0 && numLosses==0 && numInProgress==0) {
+        [components addObject:@"No games yet."];
+    }
+    
+    if(numWins!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu win%@", numWins, (numWins!=1) ? @"s" : @""]];
+    }
+    
+    if(numLosses!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu loss%@", numLosses, (numLosses!=1) ? @"es" : @""]];
+    }
+    
+    if(numInProgress!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu in progress", numInProgress]];
+    }
+    
+    _statsString = [components componentsJoinedByString:@", "];
+    
+    return _statsString;
+}
+
+- (NSString*) description
+{
+    return self.team_name;
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import "GameCollectionViewCell.h"
 #import "Constants.h"
+#import "Team.h"
+#import "Game.h"
 
 @interface GameCollectionViewCell()
 
@@ -124,17 +126,49 @@
 {
     _currentGame = game;
     
-    // Team one
-    self.teamOneLabel.text = @"Team One";
-    CGSize teamOneSize = [self.teamOneLabel sizeThatFits:CGSizeMake(self.teamOneLabel.frame.size.width, 0)];
-    self.teamOneHeightConstraint.constant = teamOneSize.height + [Constants spacing];
+    if(game.numberOfPlayers==2) {
+        NSArray *allPlayers = game.otherPlayers.allObjects;
+        Team *teamOne = (game.winningPlayer) ? game.winningPlayer : [allPlayers firstObject];
+        Team *teamTwo = (game.losingPlayer) ? game.losingPlayer : [allPlayers lastObject];
+        
+        // Team one
+        self.teamOneLabel.text = teamOne.team_name;
+        self.teamOneLabel.hidden = NO;
+        CGSize teamOneSize = [self.teamOneLabel sizeThatFits:CGSizeMake(self.teamOneLabel.frame.size.width, 0)];
+        self.teamOneHeightConstraint.constant = teamOneSize.height + [Constants spacing];
+        
+        // Team two
+        self.teamTwoLabel.text = teamTwo.team_name;
+        self.teamTwoLabel.hidden = NO;
+        CGSize teamTwoSize = [self.teamTwoLabel sizeThatFits:CGSizeMake(self.teamTwoLabel.frame.size.width, 0)];
+        self.teamTwoHeightConstraint.constant = teamTwoSize.height + [Constants spacing];
+        
+        self.versusLabel.hidden = NO;
+    }
     
-    // Team two
-    self.teamTwoLabel.text = @"Team Two";
-    CGSize teamTwoSize = [self.teamTwoLabel sizeThatFits:CGSizeMake(self.teamTwoLabel.frame.size.width, 0)];
-    self.teamTwoHeightConstraint.constant = teamTwoSize.height + [Constants spacing];
+    else {
+        self.teamOneLabel.hidden = YES;
+        self.teamTwoLabel.hidden = YES;
+        self.versusLabel.hidden = YES;
+    }
+    
+    if(!game.game_finished) {
+        _statusLabel.text = @"In progress";
+    }
+    
+    else {
+        _statusLabel.text = [NSString stringWithFormat:@"%@ won", game.winningPlayer.team_name];
+    }
     
     [self layoutIfNeeded];
+}
+
+- (void) setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    
+    self.topArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
+    self.bottomArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
 }
 
 @end

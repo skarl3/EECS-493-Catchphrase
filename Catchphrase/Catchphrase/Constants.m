@@ -11,6 +11,9 @@
 NSString *SegueToStartGameIdentifier = @"SegueToStartGame";
 NSString *SegueToPlayGameIdentifier = @"SegueToPlayGame";
 
+NSString * const TeamCellIdentifier = @"TeamCell";
+NSString * const NewTeamCellIdentifier = @"NewTeamCell";
+
 static NSString *VibratePreferenceKey = @"Vibrate";
 static NSString *ScorePreferenceKey = @"Score";
 static NSString *TimerPreferenceKey = @"Timer";

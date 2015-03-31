@@ -26,6 +26,9 @@
 + (Game*) newGameWithName:(NSString*)name
                  andTeams:(NSArray*)teams;
 
+- (NSString*) gameName;
+- (NSInteger) numberOfPlayers;
+
 @end
 
 @interface Game (CoreDataGeneratedAccessors)
