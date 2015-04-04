@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *mediumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hardLabel;
 @property (strong, nonatomic) IBOutlet UILabel *deleteAllLabel;
+@property (strong, nonatomic) IBOutlet UILabel *showTimerLabel;
 
 // Control labels
 @property (strong, nonatomic) IBOutlet UILabel *timerControlLabel;
@@ -27,6 +28,8 @@
 
 // Controls
 @property (strong, nonatomic) IBOutlet UISlider *timeSlider;
+@property (strong, nonatomic) IBOutlet UISwitch *showTimerSwitch;
+
 @property (strong, nonatomic) IBOutlet UIStepper *scoreStepper;
 @property (strong, nonatomic) IBOutlet UISwitch *vibrateSwitch;
 @property (strong, nonatomic) IBOutlet UISwitch *easySwitch;
@@ -45,6 +48,7 @@
     self.tableView.backgroundColor = [[Constants instance] LIGHT_BG];
     
     self.timerLengthLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
+    self.showTimerLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.scoreToWinLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.vibrateLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.easyLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
@@ -53,6 +57,7 @@
     self.deleteAllLabel.font = [UIFont fontWithName:[Constants boldFont] size:[Constants bodyTextSize]];
     
     self.timerLengthLabel.textColor = [[Constants instance] DARK_TEXT];
+    self.showTimerLabel.textColor = [[Constants instance] DARK_TEXT];
     self.scoreToWinLabel.textColor = [[Constants instance] DARK_TEXT];
     self.vibrateLabel.textColor = [[Constants instance] DARK_TEXT];
     self.easyLabel.textColor = [[Constants instance] DARK_TEXT];
@@ -80,6 +85,7 @@
     self.scoreControlLabel.text = [NSString stringWithFormat:@"%d pt%@", (int)self.scoreStepper.value,
                                         (self.scoreStepper.value==1) ? @"" : @"s"];
     self.vibrateSwitch.on = [Constants isVibrateOn];
+    self.showTimerSwitch.on = [Constants isShowTimerOn];
     self.easySwitch.on = [Constants isEasyOn];
     self.mediumSwitch.on = [Constants isModerateOn];
     self.hardSwitch.on = [Constants isHardOn];
@@ -107,6 +113,10 @@
 {
     if(sender==_vibrateSwitch) {
         [Constants setVibrate:_vibrateSwitch.isOn];
+    }
+    
+    else if(sender==_showTimerSwitch) {
+        [Constants setShowTimer:_showTimerSwitch.isOn];
     }
     
     else if(sender==_easySwitch) {

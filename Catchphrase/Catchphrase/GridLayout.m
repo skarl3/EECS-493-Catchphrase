@@ -10,7 +10,7 @@
 #import "Constants.h"
 
 // Grid constants
-const CGFloat kGridCellMaxSize = 180.0; // Maximum width allowed for grid cells
+const CGFloat kGridCellMaxSize = 220.0; // Maximum width allowed for grid cells
 const CGFloat kGridCellAspectRatio = 5.0/4.0; // Aspect ratio of grid cells
 
 @interface GridLayout()
@@ -81,8 +81,9 @@ const CGFloat kGridCellAspectRatio = 5.0/4.0; // Aspect ratio of grid cells
 
 - (UICollectionViewLayoutAttributes*)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
     
+    // Rotate, scale and fade in
     if ([self.indexPathsToAnimate containsObject:itemIndexPath]) {
         CGAffineTransform rotateTransform = CGAffineTransformMakeRotation(-M_PI_4/3.0);
         CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.7, 0.7);
@@ -96,8 +97,9 @@ const CGFloat kGridCellAspectRatio = 5.0/4.0; // Aspect ratio of grid cells
 
 - (UICollectionViewLayoutAttributes*)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+    UICollectionViewLayoutAttributes *attr = [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
     
+    // Rotate, scale and fade out
     if ([self.indexPathsToAnimate containsObject:itemIndexPath]) {
         CGAffineTransform rotateTransform = CGAffineTransformMakeRotation(-M_PI_4/3.0);
         CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.7, 0.7);
@@ -113,9 +115,9 @@ const CGFloat kGridCellAspectRatio = 5.0/4.0; // Aspect ratio of grid cells
 {
     [super prepareForCollectionViewUpdates:updateItems];
     
+    // Only perform appearing/disappearing animations on items that are actually appearing/disappearing
     NSMutableArray *indexPaths = [NSMutableArray array];
     for (UICollectionViewUpdateItem *updateItem in updateItems) {
-        
         switch (updateItem.updateAction) {
             case UICollectionUpdateActionInsert:
                 [indexPaths addObject:updateItem.indexPathAfterUpdate];
@@ -137,32 +139,6 @@ const CGFloat kGridCellAspectRatio = 5.0/4.0; // Aspect ratio of grid cells
     }
     
     self.indexPathsToAnimate = indexPaths;
-}
-
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)elementIndexPath
-{
-    return [super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind atIndexPath:elementIndexPath];
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
-                                                                     atIndexPath:(NSIndexPath *)indexPath
-{
-    return [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
-}
-
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
-{
-    return [super layoutAttributesForElementsInRect:rect];
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [super layoutAttributesForItemAtIndexPath:indexPath];
-}
-
-- (CGSize)collectionViewContentSize
-{
-    return [super collectionViewContentSize];
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds

@@ -17,11 +17,11 @@
 @property (nonatomic, retain) NSDate * round_finished;
 @property (nonatomic, retain) NSString * round_id;
 @property (nonatomic, retain) Game *game;
-@property (nonatomic, retain) NSSet *words;
-@property (nonatomic, retain) Team *losingPlayer;
+@property (nonatomic, retain) Team *winningPlayer;
 
 + (Round*) roundWithID:(NSString*)round_id;
 + (Round*) newRoundInGame:(Game*)game;
+- (void) finishRoundWithWinner:(Team*)winner;
 
 @end
 

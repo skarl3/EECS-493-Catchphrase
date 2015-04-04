@@ -85,10 +85,11 @@ extern NSString * const NewTeamCellIdentifier;
 + (NSString*) lightFont;
 
 // Sizes
-+ (CGFloat) sectionHeaderTextSize;
 + (CGFloat) smallBodyTextSize;
 + (CGFloat) bodyTextSize;
 + (CGFloat) titleTextSize;
++ (CGFloat) timerTextSize;
++ (CGFloat) bigWordSize;
 + (CGFloat) subTitleTextSize;
 
 
@@ -98,8 +99,6 @@ extern NSString * const NewTeamCellIdentifier;
  /////////////////////
  */
 
-+ (UIImage*) trash;
-+ (UIImage*) menu;
 + (UIImage*) moreHorizontal;
 + (UIImage*) moreVertical;
 + (UIImage*) settings;
@@ -122,6 +121,7 @@ extern NSString * const NewTeamCellIdentifier;
 
 // Getters
 + (BOOL) isVibrateOn;
++ (BOOL) isShowTimerOn;
 + (NSNumber*) scoreToWin;
 + (NSNumber*) timerLength;
 + (BOOL) isEasyOn;
@@ -130,6 +130,7 @@ extern NSString * const NewTeamCellIdentifier;
 
 // Setters
 + (void) setVibrate:(BOOL)vibrate;
++ (void) setShowTimer:(BOOL)show;
 + (void) setScoreToWin:(NSNumber*)score;
 + (void) setTimerLength:(NSNumber*)timer;
 + (void) setEasy:(BOOL)easy;

@@ -15,6 +15,7 @@
 #import "Model.h"
 #import "Constants.h"
 #import "UIView+Additions.h"
+#import "StartCollectionViewController.h"
 
 #define NEW_CELL_IDXPATH [NSIndexPath indexPathForRow:0 inSection:0]
 
@@ -25,6 +26,9 @@
 @property (nonatomic, assign) BOOL collectionIsUpdating; // Collection view is batch updating from Core Data changes
 @property (nonatomic, assign) BOOL shouldReloadCollectionView; // Collection view should reload after Core Data changes
 @property (nonatomic, strong) NSBlockOperation *objectBlock; // Item batch actions to take after new data loaded
+
+// Transition
+@property (nonatomic, strong) Team *destinationTeam;
 
 @end
 
@@ -67,6 +71,8 @@
     // View setup
     self.collectionView.backgroundColor = [[Constants instance] LIGHT_BG];
     self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -95,7 +101,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //
+    if([segue.identifier isEqualToString:SegueToStartGameIdentifier] && _destinationTeam) {
+        UINavigationController *root = [segue destinationViewController];
+        StartCollectionViewController *destination = [root.childViewControllers firstObject];
+        destination.selectedTeams = [ @[_destinationTeam] mutableCopy];
+    }
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -162,8 +172,16 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction *action) {
-                                                             NSLog(@"Cancel action");
+                                                             //NSLog(@"Cancel action");
                                                          }];
+    
+    NSString *newGameString = [NSString stringWithFormat:@"New Game With %@", cell.currentTeam];
+    UIAlertAction *newGameAction = [UIAlertAction actionWithTitle:newGameString
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+                                                              _destinationTeam = cell.currentTeam;
+                                                              [self performSegueWithIdentifier:SegueToStartGameIdentifier sender:self];
+                                                          }];
     
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
                                                            style:UIAlertActionStyleDestructive
@@ -171,8 +189,9 @@
                                                              [[Model sharedManager] destroyObject:cell.currentTeam];
                                                          }];
     
-    [alertController addAction:cancelAction];
+    [alertController addAction:newGameAction];
     [alertController addAction:deleteAction];
+    [alertController addAction:cancelAction];
     
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
     if (popover) {
@@ -222,6 +241,7 @@
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Team name";
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(alertTextFieldDidChange:)
                                                      name:UITextFieldTextDidChangeNotification
@@ -230,6 +250,7 @@
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Team description (optional)";
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
     
     void (^detachTextListener)() = ^void() {
@@ -251,7 +272,7 @@
                                                        UITextField *nameField = alertController.textFields.firstObject;
                                                        UITextField *descField = alertController.textFields.lastObject;
                                                        Team *newTeam = [Team newTeamWithName:nameField.text andDescription:descField.text];
-                                                       NSLog(@"Created new team: %@", newTeam.team_name);
+                                                       //NSLog(@"Created new team: %@", newTeam.team_name);
                                                    }];
     
     [alertController addAction:cancel];
@@ -307,7 +328,7 @@
     _collectionIsUpdating = YES;
     _shouldReloadCollectionView = NO;
     _objectBlock = [[NSBlockOperation alloc] init];
-    NSLog(@"Beginning Updates");
+    //NSLog(@"Beginning Updates");
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -321,7 +342,7 @@
             
         case NSFetchedResultsChangeInsert: {
             [self.objectBlock addExecutionBlock:^{
-                NSLog(@"Insert Section");
+                //NSLog(@"Insert Section");
                 [collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
             }];
             break;
@@ -329,7 +350,7 @@
             
         case NSFetchedResultsChangeDelete: {
             [self.objectBlock addExecutionBlock:^{
-                NSLog(@"Delete Section");
+                //NSLog(@"Delete Section");
                 [collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
             }];
             break;
@@ -337,7 +358,7 @@
             
         case NSFetchedResultsChangeUpdate: {
             [self.objectBlock addExecutionBlock:^{
-                NSLog(@"Reload Section");
+                //NSLog(@"Reload Section");
                 [collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
             }];
             break;
@@ -365,13 +386,13 @@
         case NSFetchedResultsChangeInsert: {
             if ([self.collectionView numberOfSections] > 0) {
                 if ([self.collectionView numberOfItemsInSection:indexPath.section] == 0) {
-                    NSLog(@"Reload Collection");
+                    //NSLog(@"Reload Collection");
                     self.shouldReloadCollectionView = YES;
                 }
                 
                 else {
                     [self.objectBlock addExecutionBlock:^{
-                        NSLog(@"Insert Item");
+                        //NSLog(@"Insert Item");
                         [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
                     }];
                 }
@@ -386,13 +407,13 @@
             
         case NSFetchedResultsChangeDelete: {
             if ([self.collectionView numberOfItemsInSection:indexPath.section] == 1) {
-                NSLog(@"Reload Collection");
+                //NSLog(@"Reload Collection");
                 self.shouldReloadCollectionView = YES;
             }
             
             else {
                 [self.objectBlock addExecutionBlock:^{
-                    NSLog(@"Delete Item");
+                    //NSLog(@"Delete Item");
                     [collectionView deleteItemsAtIndexPaths:@[indexPath]];
                 }];
             }
@@ -401,7 +422,7 @@
             
         case NSFetchedResultsChangeUpdate: {
             [self.objectBlock addExecutionBlock:^{
-                NSLog(@"Reload Item");
+                //NSLog(@"Reload Item");
                 TeamCollectionViewCell *cell = (TeamCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
                 [weakSelf configureTeamCell:cell forIndexPath:indexPath animated:YES];
             }];
@@ -411,7 +432,7 @@
         case NSFetchedResultsChangeMove: {
             
             [self.objectBlock addExecutionBlock:^{
-                NSLog(@"Move Item");
+                //NSLog(@"Move Item");
                 [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
             }];
             break;
@@ -437,7 +458,7 @@
         } completion:^(BOOL finished) {
             
             _collectionIsUpdating = NO;
-            NSLog(@"Ended updates");
+            //NSLog(@"Ended updates");
             
         }];
     }

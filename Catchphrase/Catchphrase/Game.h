@@ -26,6 +26,8 @@
 + (Game*) newGameWithName:(NSString*)name
                  andTeams:(NSArray*)teams;
 
+- (Round*) newRound; // Create a new round in this game's model
+- (void) finishGame; // Mark the game as finished and do wrap up calculations
 - (NSString*) gameName;
 - (NSInteger) numberOfPlayers;
 

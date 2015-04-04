@@ -8,13 +8,17 @@
 
 #import "Constants.h"
 
+// Segue identifiers
 NSString *SegueToStartGameIdentifier = @"SegueToStartGame";
 NSString *SegueToPlayGameIdentifier = @"SegueToPlayGame";
 
+// Cell identifiers
 NSString * const TeamCellIdentifier = @"TeamCell";
 NSString * const NewTeamCellIdentifier = @"NewTeamCell";
 
+// Preference keys
 static NSString *VibratePreferenceKey = @"Vibrate";
+static NSString *ShowTimerPreferenceKey = @"ShowTimer";
 static NSString *ScorePreferenceKey = @"Score";
 static NSString *TimerPreferenceKey = @"Timer";
 static NSString *EasyPreferenceKey = @"EasyWords";
@@ -65,6 +69,7 @@ static Constants* instance = nil;
                 
                 // Default preferences
                 [self setVibrate:YES];
+                [self setShowTimer:YES];
                 [self setTimerLength:@60];
                 [self setScoreToWin:@5];
                 [self setEasy:YES];
@@ -87,32 +92,19 @@ static Constants* instance = nil;
 + (CGFloat) thickLineWidth { return 2.0f; }
 + (CGFloat) borderRadius { return 2.0f; }
 
-//+ (CGFloat) shadowOpacity { return 0.25f; }
-//+ (CGFloat) shadowRadius { return 0.5f; }
-//+ (CGSize) shadowOffset { return CGSizeMake(0, 1.0f); }
-
 + (CGFloat) shadowOpacity { return 0.0f; }
 + (CGFloat) shadowRadius { return 0.0f; }
 + (CGSize) shadowOffset { return CGSizeZero; }
 
-+ (CGFloat) sectionHeaderTextSize { return 14.0f; }
-+ (CGFloat) smallBodyTextSize { return 14.0f; }
++ (CGFloat) smallBodyTextSize { return 12.0f; }
 + (CGFloat) bodyTextSize { return 16.0f; }
-+ (CGFloat) titleTextSize { return 22.0f; }
++ (CGFloat) titleTextSize { return 24.0f; }
++ (CGFloat) timerTextSize { return 28.0f; }
++ (CGFloat) bigWordSize { return 36.0f; }
 + (CGFloat) subTitleTextSize { return 18.0f; }
 
 
 // Icons
-
-+ (UIImage*) trash
-{
-    return [[UIImage imageNamed:@"trash"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
-+ (UIImage*) menu
-{
-    return [[UIImage imageNamed:@"hamburger"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
 
 + (UIImage*) moreHorizontal
 {
@@ -145,6 +137,11 @@ static Constants* instance = nil;
     return [[NSUserDefaults standardUserDefaults] boolForKey:VibratePreferenceKey];
 }
 
++ (BOOL) isShowTimerOn
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ShowTimerPreferenceKey];
+}
+
 + (NSNumber*) scoreToWin
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:ScorePreferenceKey];
@@ -175,6 +172,12 @@ static Constants* instance = nil;
 + (void) setVibrate:(BOOL)vibrate
 {
     [[NSUserDefaults standardUserDefaults] setBool:vibrate forKey:VibratePreferenceKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void) setShowTimer:(BOOL)show
+{
+    [[NSUserDefaults standardUserDefaults] setBool:show forKey:ShowTimerPreferenceKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

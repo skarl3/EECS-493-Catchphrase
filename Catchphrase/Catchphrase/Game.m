@@ -57,6 +57,46 @@
     return game;
 }
 
+- (Round*) newRound
+{
+    return [Round newRoundInGame:self];
+}
+
+- (void) finishGame
+{
+    self.game_finished = [NSDate new];
+    
+    NSArray *allPlayers = self.otherPlayers.allObjects;
+    Team *playerOne = [allPlayers firstObject];
+    Team *playerTwo = [allPlayers lastObject];
+    NSInteger playerOneCount = 0;
+    NSInteger playerTwoCount = 0;
+    
+    for(Round *r in self.rounds) {
+        if(r.winningPlayer==playerOne) {
+            playerOneCount++;
+        }
+        
+        else if(r.winningPlayer==playerTwo) {
+            playerTwoCount++;
+        }
+    }
+    
+    if(playerOneCount>playerTwoCount && playerOneCount!=playerTwoCount) {
+        self.winningPlayer = playerOne;
+        self.losingPlayer = playerTwo;
+        [self removeOtherPlayers:[NSSet setWithObjects:self.winningPlayer, self.losingPlayer, nil]];
+    }
+    
+    else if(playerOneCount!=playerTwoCount) {
+        self.winningPlayer = playerTwo;
+        self.losingPlayer = playerOne;
+        [self removeOtherPlayers:[NSSet setWithObjects:self.winningPlayer, self.losingPlayer, nil]];
+    }
+
+    [Model saveContext];
+}
+
 - (NSInteger) numberOfPlayers
 {
     NSInteger count = 0;
@@ -74,11 +114,11 @@
     
     else {
         NSMutableArray *teams = [self.otherPlayers.allObjects mutableCopy];
-        if(self.winningPlayer) {
+        if(self.winningPlayer && ![teams containsObject:self.winningPlayer]) {
             [teams addObject:self.winningPlayer];
         }
         
-        if(self.losingPlayer) {
+        if(self.losingPlayer && ![teams containsObject:self.losingPlayer]) {
             [teams addObject:self.losingPlayer];
         }
         

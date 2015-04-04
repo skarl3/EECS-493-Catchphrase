@@ -124,6 +124,7 @@ static Model* sharedClient = nil; // Singleton object
 - (void) destroyObject:(NSManagedObject*)object
 {
     [self.managedObjectContext deleteObject:object];
+    [Model saveContext];
 }
 
 - (void) destroyAllObjects
@@ -141,14 +142,14 @@ static Model* sharedClient = nil; // Singleton object
     
     for (NSManagedObject *managedObject in teams) {
         [_managedObjectContext deleteObject:managedObject];
-        NSLog(@"Team deleted.");
+        //NSLog(@"Team deleted.");
     }
     
     NSArray *games = [_managedObjectContext executeFetchRequest:fetchGames error:&error];
     
     for (NSManagedObject *managedObject in games) {
         [_managedObjectContext deleteObject:managedObject];
-        NSLog(@"Game deleted.");
+        //NSLog(@"Game deleted.");
     }
     
     if (![_managedObjectContext save:&error]) {

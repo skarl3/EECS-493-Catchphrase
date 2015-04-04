@@ -157,7 +157,13 @@
     }
     
     else {
-        _statusLabel.text = [NSString stringWithFormat:@"%@ won", game.winningPlayer.team_name];
+        if(game.winningPlayer) {
+            _statusLabel.text = [NSString stringWithFormat:@"%@ won", game.winningPlayer.team_name];
+        }
+        
+        else {
+            _statusLabel.text = @"Tie";
+        }
     }
     
     [self layoutIfNeeded];

@@ -66,7 +66,7 @@
     NSMutableArray *components = [NSMutableArray new];
     
     if(numWins==0 && numLosses==0 && numInProgress==0) {
-        [components addObject:@"No games yet."];
+        [components addObject:@"No games yet"];
     }
     
     if(numWins!=0) {
@@ -77,8 +77,8 @@
         [components addObject:[NSString stringWithFormat:@"%lu loss%@", numLosses, (numLosses!=1) ? @"es" : @""]];
     }
     
-    if(numInProgress!=0) {
-        [components addObject:[NSString stringWithFormat:@"%lu in progress", numInProgress]];
+    if(components.count==0 && numInProgress!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu game%@", numInProgress, (numInProgress!=1) ? @"s" : @""]];
     }
     
     _statsString = [components componentsJoinedByString:@", "];

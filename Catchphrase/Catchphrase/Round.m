@@ -19,8 +19,7 @@
 @dynamic round_finished;
 @dynamic round_id;
 @dynamic game;
-@dynamic words;
-@dynamic losingPlayer;
+@dynamic winningPlayer;
 
 + (Round*) roundWithID:(NSString*)round_id
 {
@@ -50,6 +49,14 @@
     [Model saveContext];
     
     return round;
+}
+
+- (void) finishRoundWithWinner:(Team*)winner
+{
+    self.round_finished = [NSDate new];
+    self.winningPlayer = winner;
+    
+    [Model saveContext];
 }
 
 @end

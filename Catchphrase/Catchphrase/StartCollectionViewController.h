@@ -11,4 +11,6 @@
 
 @interface StartCollectionViewController : TeamsCollectionViewController <NSFetchedResultsControllerDelegate, TeamCellDelegate>
 
+@property (nonatomic, strong) NSMutableSet *selectedTeams;
+
 @end

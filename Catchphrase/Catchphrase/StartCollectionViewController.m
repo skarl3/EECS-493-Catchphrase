@@ -17,14 +17,11 @@
 
 @interface StartCollectionViewController ()
 
-@property (nonatomic, strong) NSMutableSet *selectedTeams;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *playButton;
 
 @end
 
 @implementation StartCollectionViewController
-
-static NSString * const reuseIdentifier = @"Cell";
 
 - (id) initWithCoder:(NSCoder *)aDecoder
 {
@@ -41,6 +38,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     [super viewDidLoad];
     
+    // Collection UI setup
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
     self.clearsSelectionOnViewWillAppear = YES;
@@ -91,23 +89,30 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [cell configureCellWithTeam:team];
     
+    if([_selectedTeams containsObject:team]) {
+        [cell setSelected:YES];
+    }
+    
     cell.moreButton.hidden = YES;
 }
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath==NEW_CELL_IDXPATH) {
+        // Create a new team
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         [super showAlertForNewTeam];
     }
     
     else {
         if(_selectedTeams.count>MAX_TEAMS-1) {
+            // User picked too many teams
             [collectionView deselectItemAtIndexPath:indexPath animated:NO];
             [self showAlertForWrongNumberOfTeams];
         }
         
         else {
+            // Add selected team to selected teams
             NSIndexPath *offsetIdxPath = [NSIndexPath indexPathForRow:indexPath.row-1
                                                             inSection:indexPath.section];
             Team *team = [self.fetchedTeamsController objectAtIndexPath:offsetIdxPath];
@@ -137,19 +142,17 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void) showAlertForWrongNumberOfTeams
 {
-    NSString *alertTitle = @"Whoops...";
-    NSString *alertMessage = @"Please select two teams.";
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                             message:alertMessage
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops..."
+                                                                             message:@"Please select two teams."
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okay = [UIAlertAction actionWithTitle:@"Okay"
                                                    style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction *action) {
-                                                     
-                                                 }];
+                                                 handler:nil];
     [alertController addAction:okay];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertController
+                       animated:YES
+                     completion:nil];
 }
 
 - (IBAction)cancelNewGame:(id)sender

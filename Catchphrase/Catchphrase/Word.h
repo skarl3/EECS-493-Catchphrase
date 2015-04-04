@@ -2,21 +2,19 @@
 //  Word.h
 //  Catchphrase
 //
-//  Created by Nicholas Gerard on 3/30/15.
+//  Created by Nicholas Gerard on 4/3/15.
 //  Copyright (c) 2015 eecs493. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
-@class Round;
+@interface Word : NSObject
 
-@interface Word : NSManagedObject
++ (id) wordManager;
 
-@property (nonatomic, retain) NSString * the_word;
-@property (nonatomic, retain) NSDate * timestamp;
-@property (nonatomic, retain) Round *round;
-
-+ (Word*) newWordInRound:(Round*)round;
+- (NSString*) anyWord;
+- (NSString*) wordFromEasy:(BOOL)easy
+                 andMedium:(BOOL)medium
+                   andHard:(BOOL)hard;
 
 @end
