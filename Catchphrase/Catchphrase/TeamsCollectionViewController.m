@@ -272,7 +272,7 @@
                                                        UITextField *nameField = alertController.textFields.firstObject;
                                                        UITextField *descField = alertController.textFields.lastObject;
                                                        Team *newTeam = [Team newTeamWithName:nameField.text andDescription:descField.text];
-                                                       //NSLog(@"Created new team: %@", newTeam.team_name);
+                                                       NSLog(@"Created new team: %@", newTeam.team_name);
                                                    }];
     
     [alertController addAction:cancel];

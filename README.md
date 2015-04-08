@@ -9,3 +9,8 @@ To clone the repo:
 * **Scott Karl** *skarl*
 * **Kurt Jensen** *kajensen*
 * **Braden Schmidt** *bradenrs*
+
+## Run
+* Install Cocoapods (see: https://cocoapods.org).
+* Run `pod install` in the project directory.
+* Open the workspace file (not the project file) with XCode and hit run.
