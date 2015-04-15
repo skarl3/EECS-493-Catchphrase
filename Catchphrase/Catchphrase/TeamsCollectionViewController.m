@@ -17,8 +17,6 @@
 #import "UIView+Additions.h"
 #import "StartCollectionViewController.h"
 
-#define NEW_CELL_IDXPATH [NSIndexPath indexPathForRow:0 inSection:0]
-
 @interface TeamsCollectionViewController ()
 
 // Object model
@@ -130,7 +128,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         GenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NewTeamCellIdentifier
                                                                                     forIndexPath:indexPath];
         
@@ -221,7 +219,7 @@
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         [self showAlertForNewTeam];
     }
     
@@ -234,13 +232,14 @@
 {
     // Make a new team
     NSString *alertTitle = @"New Team";
-    NSString *alertMessage = @"Give your new team a name and, optionally, a description.";
+    NSString *alertMessage = @"Give your new team a name!";
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle
                                                                              message:alertMessage
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Team name";
+        textField.placeholder = [NSString stringWithFormat:@"Team name (%ld to %ld characters)",
+                                 (long)kMinTeamNameLength, (long)kMaxTeamNameLength];
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(alertTextFieldDidChange:)
@@ -248,10 +247,10 @@
                                                    object:textField];
     }];
     
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Team description (optional)";
-        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    }];
+//    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//        textField.placeholder = @"Team description (optional)";
+//        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+//    }];
     
     void (^detachTextListener)() = ^void() {
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -270,8 +269,9 @@
                                                    handler:^(UIAlertAction *action) {
                                                        detachTextListener();
                                                        UITextField *nameField = alertController.textFields.firstObject;
-                                                       UITextField *descField = alertController.textFields.lastObject;
-                                                       Team *newTeam = [Team newTeamWithName:nameField.text andDescription:descField.text];
+                                                       //UITextField *descField = alertController.textFields.lastObject;
+                                                       Team *newTeam = [Team newTeamWithName:nameField.text
+                                                                              andDescription:@""];
                                                        NSLog(@"Created new team: %@", newTeam.team_name);
                                                    }];
     
@@ -290,7 +290,7 @@
     {
         UITextField *login = alertController.textFields.firstObject;
         UIAlertAction *okAction = alertController.actions.lastObject;
-        okAction.enabled = login.text.length > 2;
+        okAction.enabled = login.text.length >= kMinTeamNameLength && login.text.length <= kMaxTeamNameLength;
     }
 }
 

@@ -17,8 +17,6 @@
 #import "Constants.h"
 #import "UIView+Additions.h"
 
-#define NEW_CELL_IDXPATH [NSIndexPath indexPathForRow:0 inSection:0]
-
 @interface GamesCollectionViewController ()
 
 // Object model
@@ -134,7 +132,7 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         GenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NewGameCellIdentifier
                                                                                     forIndexPath:indexPath];
         
@@ -182,7 +180,24 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
                                                              [[Model sharedManager] destroyObject:cell.currentGame];
                                                          }];
     
+    UIAlertAction *rematchAction = [UIAlertAction actionWithTitle:@"Rematch"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+                                                              Game *oldGame = cell.currentGame;
+                                                              NSArray *allPlayers = oldGame.otherPlayers.allObjects;
+                                                              Team *t1 = (oldGame.winningPlayer)
+                                                                ? oldGame.winningPlayer : [allPlayers firstObject];
+                                                              Team *t2 = (oldGame.losingPlayer)
+                                                                ? oldGame.losingPlayer : [allPlayers lastObject];
+                                                              
+                                                              _destinationGame = [Game newGameWithName:@""
+                                                                                              andTeams:@[ t1, t2 ]];
+                                                              [self performSegueWithIdentifier:SegueToPlayGameIdentifier
+                                                                                        sender:self];
+                                                          }];
+    
     [alertController addAction:cancelAction];
+    [alertController addAction:rematchAction];
     [alertController addAction:deleteAction];
     
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
@@ -211,7 +226,7 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         [self performSegueWithIdentifier:SegueToStartGameIdentifier sender:self];
     }
     

@@ -37,6 +37,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *startRoundTopConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *timeRemainingHeightConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *scoresWidthConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *centerLabelCenterXConstraint;
 
 // Round/timer
 @property (strong, nonatomic) Round *currentRound;
@@ -44,6 +45,9 @@
 @property (nonatomic) NSInteger remainingTicks;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *centralLabelHeightConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *centralLabelWidthConstraint;
+
+// Swipe
+@property (nonatomic) BOOL didSwipeLeft;
 
 // Players
 @property (strong, nonatomic) Team *playerOne;
@@ -60,6 +64,9 @@
     // UI setup
     _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants boldFont]
                                                         size:[Constants titleTextSize]];
+    _startRoundButton.titleLabel.numberOfLines = 0;
+    _startRoundButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _startRoundButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [_startRoundButton setTitleColor:[[Constants instance] LIGHT_BLUE]
                             forState:UIControlStateNormal];
     
@@ -83,17 +90,10 @@
     _teamTwoScore.numberOfLines = 0;
     _teamTwoScore.lineBreakMode = NSLineBreakByWordWrapping;
     
-    // Add swipe recognizers for switching words
-    UIScreenEdgePanGestureRecognizer *left = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
-                                                                                               action:@selector(handlePan:)];
-    left.edges = UIRectEdgeLeft;
-    
-    UIScreenEdgePanGestureRecognizer *right = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
-                                                                                                action:@selector(handlePan:)];
-    right.edges = UIRectEdgeRight;
-    
+    // Add swipe recognizer for switching words
+    UIPanGestureRecognizer *left = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(handlePan:)];
     [self.view addGestureRecognizer:left];
-    [self.view addGestureRecognizer:right];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -158,10 +158,10 @@
     NSDictionary *attrs = @{ NSFontAttributeName: boldFont, NSForegroundColorAttributeName: foregroundColor };
     NSDictionary *subAttrs = @{ NSFontAttributeName: regularFont, NSForegroundColorAttributeName: backgroundColor };
     
-    NSString *teamOneString = [NSString stringWithFormat:@"%@\r%lu %@%@",
-                               _playerOne.team_name, playerOneCount, @"point", (playerOneCount!=1) ? @"s" : @""];
-    NSString *teamTwoString = [NSString stringWithFormat:@"%@\r%lu %@%@",
-                               _playerTwo.team_name, playerTwoCount, @"point", (playerTwoCount!=1) ? @"s" : @""];
+    NSString *teamOneString = [NSString stringWithFormat:@"%@\r%ld %@%@",
+                               _playerOne.team_name, (long)playerOneCount, @"point", (playerOneCount!=1) ? @"s" : @""];
+    NSString *teamTwoString = [NSString stringWithFormat:@"%@\r%ld %@%@",
+                               _playerTwo.team_name, (long)playerTwoCount, @"point", (playerTwoCount!=1) ? @"s" : @""];
     
     NSRange teamOneRange = NSMakeRange(0, _playerOne.team_name.length);
     NSRange teamTwoRange = NSMakeRange(0, _playerTwo.team_name.length);
@@ -185,6 +185,7 @@
     [self updateScoreLabels];
     
     _roundInProgress = NO;
+    _menuButton.enabled = NO;
     _startRoundTopConstraint.constant = self.view.frame.size.height;
     _timeRemainingHeightConstraint.constant = 0;
     _scoresWidthConstraint.constant = FWIDTH;
@@ -227,6 +228,7 @@
     [self updateScoreLabels];
     
     _roundInProgress = NO;
+    _menuButton.enabled = NO;
     _startRoundTopConstraint.constant = 0;
     _timeRemainingHeightConstraint.constant = 0;
     _scoresWidthConstraint.constant = FWIDTH;
@@ -236,7 +238,13 @@
     [self.view animateLayoutIfNeededWithBounce:YES
                                        options:0
                                     animations:^{
-                                        _startRoundButton.alpha = 1.0;
+                                        _startRoundButton.enabled = YES;
+                                        _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants boldFont]
+                                                                                            size:[Constants titleTextSize]];
+                                        [_startRoundButton setTitleColor:[[Constants instance] LIGHT_BLUE]
+                                                                forState:UIControlStateNormal];
+                                        [_startRoundButton setTitle:@"Tap to start the next round!"
+                                                           forState:UIControlStateNormal];
                                         _wordSlider.alpha = 0;
                                         _teamOneScore.alpha = 1.0;
                                         _teamTwoScore.alpha = 1.0;
@@ -248,13 +256,21 @@
 {
     [self.view layoutIfNeeded];
     
-    _startRoundTopConstraint.constant = self.view.frame.size.height;
+    _startRoundTopConstraint.constant = self.view.frame.size.height
+                                        - [_startRoundButton sizeThatFits:CGSizeMake(_startRoundButton.frame.size.width, 0)].height
+                                        - ([Constants spacing] * 2);
     _timeRemainingHeightConstraint.constant = [Constants spacing] * 11;
     
     [self.view animateLayoutIfNeededWithBounce:YES
                                        options:0
                                     animations:^{
-                                        _startRoundButton.alpha = 0;
+                                        _startRoundButton.enabled = NO;
+                                        _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants regFont]
+                                                                                            size:[Constants subTitleTextSize]];
+                                        [_startRoundButton setTitleColor:[[Constants instance] EXTRA_LIGHT_TEXT]
+                                                                forState:UIControlStateNormal];
+                                        [_startRoundButton setTitle:@"Swipe for a new word"
+                                                           forState:UIControlStateNormal];
                                         _wordSlider.alpha = 1.0;
                                         _teamOneScore.alpha = 0;
                                         _teamTwoScore.alpha = 0;
@@ -266,6 +282,7 @@
 - (void) beginRound
 {
     _roundInProgress = YES;
+    _menuButton.enabled = YES;
     _currentRound = [self.currentGame newRound];
     
     if (_countdownTimer) {
@@ -287,6 +304,7 @@
 - (void) handlePan:(UIPanGestureRecognizer *)sender
 {
     if(_roundInProgress && sender.state == UIGestureRecognizerStateBegan) {
+        _didSwipeLeft = ([sender velocityInView:self.view].x <= 0);
         [self generateNewWord];
     }
 }
@@ -294,24 +312,45 @@
 - (void) generateNewWord
 {
     [_centralLabel layoutIfNeeded];
-    
-    _centralLabel.text = [[Word wordManager] wordFromEasy:[Constants isEasyOn]
-                                                andMedium:[Constants isModerateOn]
-                                                  andHard:[Constants isHardOn]];
     _centralLabel.textColor = [[Constants instance] LIGHT_BLUE];
-    _centralLabelHeightConstraint.constant = [_centralLabel sizeThatFits:CGSizeMake(FWIDTH*3.0f/4.0f, 0)].height;
-    _centralLabelWidthConstraint.constant = FWIDTH*3.0f/4.0f;
+    float directionMultiplier = _didSwipeLeft ? 1.0f : -1.0f;
+    float animDuration = 0.3;
     
-    [_centralLabel animateLayoutIfNeededWithBounce:YES
-                                           options:0
-                                        animations:^{
-                                            _centralLabel.alpha = 1.0;
-                                        }];
+    _centerLabelCenterXConstraint.constant = [Constants spacing] * directionMultiplier;
+    
+    [_centralLabel animateLayoutIfNeededWithDuration:animDuration
+                                              bounce:YES
+                                             options:0
+                                          animations:^{
+                                              _centralLabel.alpha = 0;
+                                          }
+                                          completion:^{
+                                              _centerLabelCenterXConstraint.constant = -[Constants spacing] * directionMultiplier;
+                                              _centralLabel.text = [[Word wordManager] wordFromEasy:[Constants isEasyOn]
+                                                                                          andMedium:[Constants isModerateOn]
+                                                                                            andHard:[Constants isHardOn]];
+                                              [_centralLabel layoutIfNeeded];
+                                              _centerLabelCenterXConstraint.constant = 0;
+                                              _centralLabelHeightConstraint.constant =
+                                                    [_centralLabel sizeThatFits:CGSizeMake(FWIDTH*3.0f/4.0f, 0)].height;
+                                              _centralLabelWidthConstraint.constant = FWIDTH*3.0f/4.0f;
+                                              
+                                              [_centralLabel animateLayoutIfNeededWithDuration:animDuration
+                                                                                        bounce:YES
+                                                                                       options:0
+                                                                                    animations:^{
+                                                                                        _centralLabel.alpha = 1.0;
+                                                                                    }
+                                                                                    completion:^{
+                                                                                        
+                                                                                    }];
+                                          }];
 }
 
 - (void) endRound
 {
     _roundInProgress = NO;
+    _menuButton.enabled = NO;
     [_countdownTimer invalidate];
     _countdownTimer = nil;
     
@@ -346,7 +385,15 @@
     
     [alertController addAction:cancelAction];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    if(self.presentedViewController) {
+        [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
+    }
+    
+    else {
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void) handleTimerTick
@@ -440,7 +487,11 @@
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
-    _startRoundTopConstraint.constant = (_roundInProgress) ? size.height : 0;
+    _startRoundTopConstraint.constant =
+        (_roundInProgress) ? size.height
+                             - [_startRoundButton sizeThatFits:CGSizeMake(_startRoundButton.frame.size.width, 0)].height
+                             - ([Constants spacing] * 2)
+                           : 0;
     _centralLabelHeightConstraint.constant = [_centralLabel sizeThatFits:CGSizeMake(size.width/2, 0)].height;
     _centralLabelWidthConstraint.constant = size.width/2;
     

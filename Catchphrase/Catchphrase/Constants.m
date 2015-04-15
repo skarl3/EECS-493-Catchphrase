@@ -16,6 +16,10 @@ NSString *SegueToPlayGameIdentifier = @"SegueToPlayGame";
 NSString * const TeamCellIdentifier = @"TeamCell";
 NSString * const NewTeamCellIdentifier = @"NewTeamCell";
 
+// Team name constraints
+NSInteger const kMinTeamNameLength = 1;
+NSInteger const kMaxTeamNameLength = 15;
+
 // Preference keys
 static NSString *VibratePreferenceKey = @"Vibrate";
 static NSString *ShowTimerPreferenceKey = @"ShowTimer";

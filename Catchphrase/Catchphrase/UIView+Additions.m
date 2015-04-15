@@ -102,13 +102,14 @@ const float ANIM_DURATION_NOBOUNCE = 0.2;
                               animations:(void (^)(void))animations
 {
     NSTimeInterval duration = bounce ? ANIM_DURATION_BOUNCE : ANIM_DURATION_NOBOUNCE;
-    [self animateLayoutIfNeededWithDuration:duration bounce:bounce options:options animations:animations];
+    [self animateLayoutIfNeededWithDuration:duration bounce:bounce options:options animations:animations completion:nil];
 }
 
 - (void) animateLayoutIfNeededWithDuration:(NSTimeInterval)duration
                                     bounce:(BOOL)bounce
                                    options:(UIViewAnimationOptions)options
                                 animations:(void (^)(void))animations
+                                completion:(void (^)(void))completion
 {
     if (bounce) {
         [UIView animateWithDuration:duration
@@ -123,7 +124,11 @@ const float ANIM_DURATION_NOBOUNCE = 0.2;
                                  animations();
                              }
                          }
-                         completion:NULL];
+                         completion:^(BOOL finished) {
+                             if (completion) {
+                                 completion();
+                             }
+                         }];
     }
     
     else {
@@ -137,7 +142,11 @@ const float ANIM_DURATION_NOBOUNCE = 0.2;
                                  animations();
                              }
                          }
-                         completion:NULL];
+                         completion:^(BOOL finished) {
+                             if (completion) {
+                                 completion();
+                             }
+                         }];
     }
 }
 

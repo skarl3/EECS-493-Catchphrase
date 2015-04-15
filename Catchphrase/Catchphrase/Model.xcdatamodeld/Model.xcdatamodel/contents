@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Game" representedClassName="Game" syncable="YES">
         <attribute name="game_finished" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="game_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,10 +21,10 @@
         <attribute name="team_desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="team_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="team_name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="inProgressGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="otherPlayers" inverseEntity="Game" syncable="YES"/>
-        <relationship name="lostGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="losingPlayer" inverseEntity="Game" syncable="YES"/>
-        <relationship name="wonGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="winningPlayer" inverseEntity="Game" syncable="YES"/>
-        <relationship name="wonRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="winningPlayer" inverseEntity="Round" syncable="YES"/>
+        <relationship name="inProgressGames" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" inverseName="otherPlayers" inverseEntity="Game" syncable="YES"/>
+        <relationship name="lostGames" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" inverseName="losingPlayer" inverseEntity="Game" syncable="YES"/>
+        <relationship name="wonGames" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" inverseName="winningPlayer" inverseEntity="Game" syncable="YES"/>
+        <relationship name="wonRounds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Round" inverseName="winningPlayer" inverseEntity="Round" syncable="YES"/>
     </entity>
     <elements>
         <element name="Game" positionX="-2360" positionY="-1971" width="128" height="163"/>

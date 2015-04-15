@@ -54,6 +54,7 @@ extern const float ANIM_DURATION_NOBOUNCE;
 - (void) animateLayoutIfNeededWithDuration:(NSTimeInterval)duration
                                     bounce:(BOOL)bounce
                                    options:(UIViewAnimationOptions)options
-                                animations:(void (^)(void))animations;
+                                animations:(void (^)(void))animations
+                                completion:(void (^)(void))completion;
 
 @end

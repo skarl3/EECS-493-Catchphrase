@@ -77,8 +77,8 @@
         [components addObject:[NSString stringWithFormat:@"%lu loss%@", numLosses, (numLosses!=1) ? @"es" : @""]];
     }
     
-    if(components.count==0 && numInProgress!=0) {
-        [components addObject:[NSString stringWithFormat:@"%lu game%@", numInProgress, (numInProgress!=1) ? @"s" : @""]];
+    if(numInProgress!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu in progress", numInProgress]];
     }
     
     _statsString = [components componentsJoinedByString:@", "];

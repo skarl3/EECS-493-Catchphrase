@@ -44,6 +44,10 @@
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.topArea.translatesAutoresizingMaskIntoConstraints = NO;
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
     // Containers
     self.cardView.backgroundColor = [UIColor whiteColor];
     self.cardView.layer.cornerRadius = [Constants borderRadius];

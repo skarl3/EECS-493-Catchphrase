@@ -40,6 +40,8 @@
 
 @implementation SettingsTableViewController
 
+const static NSInteger kRoundingDistance = 2;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,6 +76,9 @@
     // Control setup
     self.timeSlider.minimumValue = 10.0f;
     self.timeSlider.maximumValue = 120.0f;
+    [self.timeSlider addTarget:self
+                        action:@selector(timerChangeEnded:)
+              forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside)];
     
     [self.scoreStepper setMinimumValue:1.0];
     [self.scoreStepper setMaximumValue:50.0];
@@ -82,7 +87,7 @@
     self.timeSlider.value = [Constants timerLength].floatValue;
     self.timerControlLabel.text = [NSString stringWithFormat:@"%d sec", (int)self.timeSlider.value];
     self.scoreStepper.value = [Constants scoreToWin].floatValue;
-    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d pt%@", (int)self.scoreStepper.value,
+    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
                                         (self.scoreStepper.value==1) ? @"" : @"s"];
     self.vibrateSwitch.on = [Constants isVibrateOn];
     self.showTimerSwitch.on = [Constants isShowTimerOn];
@@ -102,9 +107,26 @@
     [Constants setTimerLength:@(self.timeSlider.value)];
 }
 
+- (void) timerChangeEnded:(id)sender
+{
+    // Round the final value of the slider if it's close to a multiple of ten
+    NSInteger val = (int)self.timeSlider.value;
+    if(val % 10 <= kRoundingDistance) {
+        val = val / 10 * 10;
+    }
+    
+    else if(val % 10 >= 10 - kRoundingDistance) {
+        val = val / 10 * 10 + 10;
+    }
+    
+    [self.timeSlider setValue:val animated:YES];
+    self.timerControlLabel.text = [NSString stringWithFormat:@"%ld sec", (long)val];
+    [Constants setTimerLength:@(val)];
+}
+
 - (IBAction)scoreStepperChanged:(id)sender
 {
-    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d pt%@", (int)self.scoreStepper.value,
+    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
                                    (self.scoreStepper.value==1) ? @"" : @"s"];
     [Constants setScoreToWin:@(self.scoreStepper.value)];
 }

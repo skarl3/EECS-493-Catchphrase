@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "Game.h"
 
-#define NEW_CELL_IDXPATH [NSIndexPath indexPathForRow:0 inSection:0]
 #define MAX_TEAMS 2
 
 @interface StartCollectionViewController ()
@@ -59,7 +58,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         GenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NewTeamCellIdentifier
                                                                                     forIndexPath:indexPath];
         
@@ -98,7 +97,7 @@
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath==NEW_CELL_IDXPATH) {
+    if(indexPath.row==0 && indexPath.section==0) {
         // Create a new team
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         [super showAlertForNewTeam];
@@ -125,7 +124,7 @@
 
 - (void) collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath!=NEW_CELL_IDXPATH) {
+    if(indexPath.row!=0 || indexPath.section!=0) {
         NSIndexPath *offsetIdxPath = [NSIndexPath indexPathForRow:indexPath.row-1
                                                         inSection:indexPath.section];
         Team *team = [self.fetchedTeamsController objectAtIndexPath:offsetIdxPath];

@@ -87,9 +87,9 @@
     
     // Team One
     self.teamOneLabel.font = [UIFont fontWithName:[Constants regFont]
-                                             size:[Constants titleTextSize]];
+                                             size:[Constants bodyTextSize]];
     self.teamOneLabel.textColor = [[Constants instance] DARK_TEXT];
-    self.teamOneLabel.numberOfLines = 0;
+    self.teamOneLabel.numberOfLines = 1;
     self.teamOneLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.teamOneLeftConstraint.constant = [Constants spacing];
     self.teamOneRightConstraint.constant = [Constants spacing];
@@ -97,9 +97,9 @@
     
     // Team Two
     self.teamTwoLabel.font = [UIFont fontWithName:[Constants regFont]
-                                             size:[Constants titleTextSize]];
+                                             size:[Constants bodyTextSize]];
     self.teamTwoLabel.textColor = [[Constants instance] DARK_TEXT];
-    self.teamTwoLabel.numberOfLines = 0;
+    self.teamTwoLabel.numberOfLines = 1;
     self.teamTwoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.teamTwoLeftConstraint.constant = [Constants spacing];
     self.teamTwoRightConstraint.constant = [Constants spacing];
