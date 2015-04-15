@@ -107,7 +107,7 @@ static Constants* instance = nil;
 + (CGFloat) bodyTextSize { return 16.0f; }
 + (CGFloat) titleTextSize { return 24.0f; }
 + (CGFloat) timerTextSize { return 28.0f; }
-+ (CGFloat) bigWordSize { return 96.0f; }
++ (CGFloat) bigWordSize { return 60.0f; }
 + (CGFloat) subTitleTextSize { return 18.0f; }
 
 

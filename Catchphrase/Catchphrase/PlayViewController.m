@@ -439,13 +439,13 @@
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate); // Vibrate for last 5 ticks if enabled
         }
         
-        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.2, 1.2);
-        [UIView animateWithDuration:0.2
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.25, 1.25);
+        [UIView animateWithDuration:0.15
                          animations:^{
                              _timeRemainingLabel.transform = scaleTransform;
                          }
                          completion:^(BOOL finished) {
-                             [UIView animateWithDuration:0.4
+                             [UIView animateWithDuration:0.3
                                               animations:^{
                                                   _timeRemainingLabel.transform = CGAffineTransformIdentity;
                                               }
