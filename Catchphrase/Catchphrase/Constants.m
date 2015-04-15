@@ -54,6 +54,9 @@ static Constants* instance = nil;
             instance.DARK_ORANGE = [UIColor colorWithRed:230/255.0 green:81/255.0 blue:0/255.0 alpha:1];
             
             instance.EXTRA_LIGHT_BG = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
+            instance.EXTRA_LIGHT_YELLOW_BG = [UIColor colorWithRed:255/255.0 green:240/255.0 blue:200/255.0 alpha:1.0];
+            instance.EXTRA_LIGHT_ORANGE_BG = [UIColor colorWithRed:255/255.0 green:200/255.0 blue:128/255.0 alpha:1.0];
+            
             instance.LIGHT_BG = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
             instance.DARK_BG = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
             
@@ -104,7 +107,7 @@ static Constants* instance = nil;
 + (CGFloat) bodyTextSize { return 16.0f; }
 + (CGFloat) titleTextSize { return 24.0f; }
 + (CGFloat) timerTextSize { return 28.0f; }
-+ (CGFloat) bigWordSize { return 36.0f; }
++ (CGFloat) bigWordSize { return 96.0f; }
 + (CGFloat) subTitleTextSize { return 18.0f; }
 
 

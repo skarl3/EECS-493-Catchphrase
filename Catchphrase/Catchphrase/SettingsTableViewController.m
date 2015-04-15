@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *hardLabel;
 @property (strong, nonatomic) IBOutlet UILabel *deleteAllLabel;
 @property (strong, nonatomic) IBOutlet UILabel *showTimerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *howToPlayLabel;
 
 // Control labels
 @property (strong, nonatomic) IBOutlet UILabel *timerControlLabel;
@@ -47,7 +48,7 @@ const static NSInteger kRoundingDistance = 2;
     [super viewDidLoad];
     
     // UI setup
-    self.tableView.backgroundColor = [[Constants instance] LIGHT_BG];
+    self.tableView.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
     
     self.timerLengthLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.showTimerLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
@@ -56,6 +57,7 @@ const static NSInteger kRoundingDistance = 2;
     self.easyLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.mediumLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.hardLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
+    self.howToPlayLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.deleteAllLabel.font = [UIFont fontWithName:[Constants boldFont] size:[Constants bodyTextSize]];
     
     self.timerLengthLabel.textColor = [[Constants instance] DARK_TEXT];
@@ -87,8 +89,8 @@ const static NSInteger kRoundingDistance = 2;
     self.timeSlider.value = [Constants timerLength].floatValue;
     self.timerControlLabel.text = [NSString stringWithFormat:@"%d sec", (int)self.timeSlider.value];
     self.scoreStepper.value = [Constants scoreToWin].floatValue;
-    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
-                                        (self.scoreStepper.value==1) ? @"" : @"s"];
+    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d", (int)self.scoreStepper.value ];//[NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
+                                        //(self.scoreStepper.value==1) ? @"" : @"s"];
     self.vibrateSwitch.on = [Constants isVibrateOn];
     self.showTimerSwitch.on = [Constants isShowTimerOn];
     self.easySwitch.on = [Constants isEasyOn];
@@ -126,8 +128,8 @@ const static NSInteger kRoundingDistance = 2;
 
 - (IBAction)scoreStepperChanged:(id)sender
 {
-    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
-                                   (self.scoreStepper.value==1) ? @"" : @"s"];
+    self.scoreControlLabel.text = [NSString stringWithFormat:@"%d", (int)self.scoreStepper.value ];//[NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
+                                   //(self.scoreStepper.value==1) ? @"" : @"s"];
     [Constants setScoreToWin:@(self.scoreStepper.value)];
 }
 
@@ -162,7 +164,11 @@ const static NSInteger kRoundingDistance = 2;
     NSInteger numSections = [tableView numberOfSections];
     NSInteger numRows = [tableView numberOfRowsInSection:numSections-1];
     
-    if(indexPath.section==numSections-1 && indexPath.row==numRows-1) {
+    if (indexPath.section == numSections-2 && indexPath.row==0) {
+        //how to play
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.wikipedia.org/wiki/Catch_Phrase_%28game%29"]];
+    }
+    else if(indexPath.section==numSections-1 && indexPath.row==numRows-1) {
         NSLog(@"User tapped delete all; show popup confirmation before proceeding.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Delete Everything"
                                                                                  message:@"Are you sure you want to delete all saved data? You can't undo this action."

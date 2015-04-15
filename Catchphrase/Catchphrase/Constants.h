@@ -42,6 +42,8 @@ extern NSInteger const kMaxTeamNameLength;
 
 // Backgrounds
 @property (nonatomic, strong) UIColor* EXTRA_LIGHT_BG;
+@property (nonatomic, strong) UIColor* EXTRA_LIGHT_YELLOW_BG;
+@property (nonatomic, strong) UIColor* EXTRA_LIGHT_ORANGE_BG;
 @property (nonatomic, strong) UIColor* LIGHT_BG;
 @property (nonatomic, strong) UIColor* DARK_BG;
 

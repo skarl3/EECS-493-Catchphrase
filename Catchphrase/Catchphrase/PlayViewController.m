@@ -14,7 +14,9 @@
 #import "Round.h"
 #import "Word.h"
 #import "Model.h"
-#import <AudioToolbox/AudioServices.h>
+//#import <AudioToolbox/AudioServices.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 #define FWIDTH self.view.frame.size.width
 #define FHEIGHT self.view.frame.size.height
@@ -53,6 +55,9 @@
 @property (strong, nonatomic) Team *playerOne;
 @property (strong, nonatomic) Team *playerTwo;
 
+// Audio
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation PlayViewController
@@ -62,6 +67,7 @@
     [super viewDidLoad];
     
     // UI setup
+    self.view.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
     _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants boldFont]
                                                         size:[Constants titleTextSize]];
     _startRoundButton.titleLabel.numberOfLines = 0;
@@ -79,10 +85,11 @@
                                         size:[Constants bigWordSize]];
     _centralLabel.textColor = [[Constants instance] LIGHT_TEXT];
     _centralLabel.alpha = 0;
-    _centralLabel.numberOfLines = 0;
+    /*_centralLabel.numberOfLines = 0;
     _centralLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _centralLabel.minimumScaleFactor = .5;
     _centralLabelHeightConstraint.constant = 0;
-    _centralLabelWidthConstraint.constant = 0;
+    _centralLabelWidthConstraint.constant = 0;*/ //setup in storyboard
     
     _teamOneScore.numberOfLines = 0;
     _teamOneScore.lineBreakMode = NSLineBreakByWordWrapping;
@@ -353,6 +360,28 @@
     _menuButton.enabled = NO;
     [_countdownTimer invalidate];
     _countdownTimer = nil;
+    
+    if ([Constants isVibrateOn]) { //play finished sound
+        
+        NSError* error = nil;
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                               error:&error];
+        if (!error) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"alarm" ofType:@"mp3"];
+            NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: path];
+            
+            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL
+                                                                      error:&error];
+            if (!error) {
+                self.audioPlayer.volume = 1.0;
+                [self.audioPlayer prepareToPlay];
+                [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                if (!error) {
+                    [self.audioPlayer play];
+                }
+            }
+        }
+    }
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Time's Up!"
                                                                              message:@"Which team won the round?"

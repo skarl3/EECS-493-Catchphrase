@@ -13,7 +13,7 @@
 
 - (void) awakeFromNib
 {
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];//[[Constants instance] EXTRA_LIGHT_BG];
     self.layer.cornerRadius = [Constants borderRadius];
     self.layer.masksToBounds = YES;
     self.layer.borderColor = [[Constants instance] EXTRA_LIGHT_TEXT].CGColor;

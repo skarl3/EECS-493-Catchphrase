@@ -73,7 +73,7 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     self.tabBarController.tabBar.tintColor = [[Constants instance] LIGHT_BLUE];
     
     // View setup
-    self.collectionView.backgroundColor = [[Constants instance] LIGHT_BG];
+    self.collectionView.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);

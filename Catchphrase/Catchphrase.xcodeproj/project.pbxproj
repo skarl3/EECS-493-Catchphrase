@@ -31,6 +31,7 @@
 		34CF0FE51AC97D4E008DBF60 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CF0FE31AC97D4E008DBF60 /* LaunchScreen.xib */; };
 		34CF0FF11AC97D4E008DBF60 /* CatchphraseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CF0FF01AC97D4E008DBF60 /* CatchphraseTests.m */; };
 		4A9A7D9AD1FFC76AF2E98132 /* libPods-Catchphrase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD4C8507D3876EA749DAB4F /* libPods-Catchphrase.a */; };
+		90F2704D1ADEE39D00C83CB0 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90F2704C1ADEE39C00C83CB0 /* alarm.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		34CF0FEA1AC97D4E008DBF60 /* CatchphraseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatchphraseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF0FEF1AC97D4E008DBF60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34CF0FF01AC97D4E008DBF60 /* CatchphraseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatchphraseTests.m; sourceTree = "<group>"; };
+		90F2704C1ADEE39C00C83CB0 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		F12056208F53A50ECC43A2AA /* Pods-Catchphrase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Catchphrase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Catchphrase/Pods-Catchphrase.debug.xcconfig"; sourceTree = "<group>"; };
 		FFD4C8507D3876EA749DAB4F /* libPods-Catchphrase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Catchphrase.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -236,6 +238,7 @@
 		34CF0FD01AC97D4E008DBF60 /* Catchphrase */ = {
 			isa = PBXGroup;
 			children = (
+				90F2704C1ADEE39C00C83CB0 /* alarm.mp3 */,
 				34CF0FD51AC97D4E008DBF60 /* AppDelegate.h */,
 				34CF0FD61AC97D4E008DBF60 /* AppDelegate.m */,
 				34CF0FE11AC97D4E008DBF60 /* Images.xcassets */,
@@ -367,6 +370,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90F2704D1ADEE39D00C83CB0 /* alarm.mp3 in Resources */,
 				34CF0FE01AC97D4E008DBF60 /* Main.storyboard in Resources */,
 				34CF0FE51AC97D4E008DBF60 /* LaunchScreen.xib in Resources */,
 				34CF0FE21AC97D4E008DBF60 /* Images.xcassets in Resources */,
