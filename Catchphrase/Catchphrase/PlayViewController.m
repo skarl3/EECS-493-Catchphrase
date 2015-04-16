@@ -214,7 +214,7 @@
     
     _centralLabel.text = (_currentGame.winningPlayer)
                             ? [NSString stringWithFormat:@"%@ won", self.currentGame.winningPlayer.team_name]
-                            : @"Tie! Guess you'll have to rematch...";
+                            : @"Tie!";
 
     _centralLabel.textColor = [UIColor whiteColor];
     _centralLabel.alpha = 0;

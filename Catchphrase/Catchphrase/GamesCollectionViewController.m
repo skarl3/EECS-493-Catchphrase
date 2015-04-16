@@ -22,6 +22,7 @@
 @interface GamesCollectionViewController ()
 
 // Object model
+@property (nonatomic, assign) BOOL firstAppeared;
 @property (nonatomic, assign) BOOL hasFetchedCache; // Tracks the state of the Core Data fetch request
 @property (nonatomic, assign) BOOL collectionIsUpdating; // Collection view is batch updating from Core Data changes
 @property (nonatomic, assign) BOOL shouldReloadCollectionView; // Collection view should reload after Core Data changes
@@ -65,6 +66,7 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
 - (void) commonInit
 {
     // Setup
+    _firstAppeared = NO;
     _hasFetchedCache = NO;
     _collectionIsUpdating = NO;
     _shouldReloadCollectionView = NO;
@@ -112,7 +114,33 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
         }
     }
     
+    // Do the first time animation if coming from launch screen
+    if(!_firstAppeared) {
+        self.tabBarController.hidesBottomBarWhenPushed = YES;
+        UIEdgeInsets insets = self.collectionView.contentInset;
+        insets.top = self.view.frame.size.height;
+        self.collectionView.contentInset = insets;
+    }
+    
     [self.collectionView reloadData];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if(!_firstAppeared) {
+        _firstAppeared = YES;
+        UIEdgeInsets insets = self.collectionView.contentInset;
+        insets.top = 0;
+        [UIView animateWithBounce:YES
+                          options:0
+                         duration:ANIM_DURATION_BOUNCE
+                       animations:^{
+                           self.collectionView.contentInset = insets;
+                       }
+                       completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,9 +171,9 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     [tabBarController.view insertSubview:sourceView belowSubview:tabBarController.tabBar];
     destinationView.frame = CGRectMake(-multiplier * CGRectGetWidth(frame), 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
     
-    [UIView animateWithBounce:YES
+    [UIView animateWithBounce:NO
                       options:0
-                     duration:ANIM_DURATION_BOUNCE
+                     duration:ANIM_DURATION_NOBOUNCE
                    animations:^{
                        sourceView.frame = CGRectMake(multiplier * CGRectGetWidth(frame), 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
                        destinationView.frame = frame;

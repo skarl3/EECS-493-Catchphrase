@@ -16,6 +16,7 @@
 #import "Constants.h"
 #import "UIView+Additions.h"
 #import "StartCollectionViewController.h"
+#import "ModalTransitionDelegate.h"
 
 @interface TeamsCollectionViewController ()
 
@@ -27,6 +28,7 @@
 
 // Transition
 @property (nonatomic, strong) Team *destinationTeam;
+@property (nonatomic) ModalTransitionDelegate* transitionDelegate;
 
 @property (strong, nonatomic) CAGradientLayer *backgroundGradient;
 
@@ -110,11 +112,25 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UINavigationController *root = [segue destinationViewController];
+    root.transitioningDelegate = self.transitionDelegate;
+    root.modalPresentationStyle = UIModalPresentationCustom;
+    root.modalPresentationCapturesStatusBarAppearance = YES;
+    
     if([segue.identifier isEqualToString:SegueToStartGameIdentifier] && _destinationTeam) {
-        UINavigationController *root = [segue destinationViewController];
         StartCollectionViewController *destination = [root.childViewControllers firstObject];
         destination.selectedTeams = [ @[_destinationTeam] mutableCopy];
     }
+}
+
+- (ModalTransitionDelegate*) transitionDelegate
+{
+    if(!_transitionDelegate) {
+        _transitionDelegate = [ModalTransitionDelegate new];
+        
+    }
+    
+    return _transitionDelegate;
 }
 
 #pragma mark <UICollectionViewDataSource>

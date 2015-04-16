@@ -58,7 +58,7 @@
     self.cardView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
     self.topArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
-    self.bottomArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.bottomArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     self.bottomAreaHeightConstraint.constant = [Constants controlBarHeight];
     
     // Status label
@@ -162,8 +162,8 @@
 - (void) setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    self.topArea.backgroundColor = (highlighted) ? [UIColor colorWithWhite:1.0 alpha:0.8] : [UIColor colorWithWhite:1.0 alpha:0.6];
-    self.bottomArea.backgroundColor = (highlighted) ? [UIColor colorWithWhite:1.0 alpha:0.8] : [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.topArea.backgroundColor = (highlighted) ? [UIColor whiteColor] : [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.bottomArea.backgroundColor = (highlighted) ? [UIColor whiteColor] : [UIColor colorWithWhite:1.0 alpha:0.8];
 }
 
 @end

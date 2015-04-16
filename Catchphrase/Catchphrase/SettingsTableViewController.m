@@ -217,7 +217,7 @@ const static NSInteger kRoundingDistance = 2;
 {
     cell.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
     cell.selectedBackgroundView = [UIView new];
-    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];
+    cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
