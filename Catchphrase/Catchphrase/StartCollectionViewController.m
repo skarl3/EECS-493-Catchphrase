@@ -11,6 +11,7 @@
 #import "GenericCollectionViewCell.h"
 #import "Constants.h"
 #import "Game.h"
+#import "UIImage+Additions.h"
 
 #define MAX_TEAMS 2
 
@@ -36,6 +37,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.tintColor = [[Constants instance] LIGHT_BLUE];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    [self.navigationController.navigationBar setBackgroundImage:
+     [UIImage imageWithGradientFrom:[UIColor colorWithWhite:1.0 alpha:0.9]
+                                 to:[UIColor colorWithWhite:1.0 alpha:0.8]
+                         withHeight:self.navigationController.navigationBar.frame.size.height]
+                                                 forBarPosition:UIBarPositionAny
+                                                     barMetrics:UIBarMetricsDefault];
     
     // Collection UI setup
     self.collectionView.allowsSelection = YES;

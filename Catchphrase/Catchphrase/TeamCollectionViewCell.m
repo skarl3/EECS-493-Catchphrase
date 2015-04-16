@@ -77,8 +77,8 @@
     // Added label
     self.addedLabel.font = [UIFont fontWithName:[Constants boldFont]
                                            size:[Constants smallBodyTextSize]];
-    self.addedLabel.textColor = [UIColor whiteColor];
-    self.addedLabel.backgroundColor = [[Constants instance] LIGHT_BLUE];
+    self.addedLabel.textColor = [[Constants instance] LIGHT_BLUE];
+    self.addedLabel.backgroundColor = [UIColor whiteColor];
     self.addedLabelHeightConstraint.constant = 0;
     
     // More button

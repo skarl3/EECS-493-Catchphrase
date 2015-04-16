@@ -17,6 +17,7 @@
 #import "Constants.h"
 #import "UIView+Additions.h"
 #import "ModalTransitionDelegate.h"
+#import "UIImage+Additions.h"
 
 @interface GamesCollectionViewController ()
 
@@ -75,6 +76,10 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     
     // Tab bar
     self.tabBarController.tabBar.tintColor = [[Constants instance] LIGHT_BLUE];
+    self.tabBarController.tabBar.shadowImage = [UIImage new];
+    self.tabBarController.tabBar.backgroundImage = [UIImage imageWithGradientFrom:[UIColor colorWithWhite:1.0 alpha:0.9]
+                                                                               to:[UIColor colorWithWhite:1.0 alpha:0.8]
+                                                                       withHeight:self.tabBarController.tabBar.frame.size.height];
     self.tabBarController.delegate = self;
     
     _backgroundGradient = [CAGradientLayer layer];

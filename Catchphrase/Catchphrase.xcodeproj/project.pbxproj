@@ -22,6 +22,7 @@
 		342E1D601AC9A17E00DFD364 /* GameCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D5F1AC9A17E00DFD364 /* GameCollectionViewCell.m */; };
 		342E1D631AC9A18600DFD364 /* TeamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D621AC9A18600DFD364 /* TeamCollectionViewCell.m */; };
 		342E1D661AC9B6D000DFD364 /* GenericCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D651AC9B6D000DFD364 /* GenericCollectionViewCell.m */; };
+		3474CE651AE01449000BA4FD /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474CE641AE01449000BA4FD /* UIImage+Additions.m */; };
 		34A928D81ACA0B62002EA7EA /* StartCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */; };
 		34B3B5701ACF58DB0062FB63 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B3B56F1ACF58DB0062FB63 /* Word.m */; };
 		34C6A12D1ADFEE6D00B68E9C /* ModalPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6A12A1ADFEE6D00B68E9C /* ModalPresentationController.m */; };
@@ -78,6 +79,8 @@
 		342E1D621AC9A18600DFD364 /* TeamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCollectionViewCell.m; sourceTree = "<group>"; };
 		342E1D641AC9B6D000DFD364 /* GenericCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericCollectionViewCell.h; sourceTree = "<group>"; };
 		342E1D651AC9B6D000DFD364 /* GenericCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericCollectionViewCell.m; sourceTree = "<group>"; };
+		3474CE631AE01449000BA4FD /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
+		3474CE641AE01449000BA4FD /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
 		34A928D61ACA0B62002EA7EA /* StartCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCollectionViewController.h; sourceTree = "<group>"; };
 		34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCollectionViewController.m; sourceTree = "<group>"; };
 		34B3B56E1ACF58DB0062FB63 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 			children = (
 				342E1D551AC993BE00DFD364 /* UIView+Additions.h */,
 				342E1D561AC993BE00DFD364 /* UIView+Additions.m */,
+				3474CE631AE01449000BA4FD /* UIImage+Additions.h */,
+				3474CE641AE01449000BA4FD /* UIImage+Additions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				342E1D461AC98BA400DFD364 /* Game.m in Sources */,
+				3474CE651AE01449000BA4FD /* UIImage+Additions.m in Sources */,
 				342E1D631AC9A18600DFD364 /* TeamCollectionViewCell.m in Sources */,
 				342E1D151AC97E7B00DFD364 /* GamesCollectionViewController.m in Sources */,
 				34CF0FD71AC97D4E008DBF60 /* AppDelegate.m in Sources */,
