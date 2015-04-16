@@ -142,7 +142,7 @@ const static NSInteger kRoundingDistance = 2;
     }
     
     else if(val % 10 >= 10 - kRoundingDistance) {
-        val = val / 10 * 10 + 10;
+        val = ((val / 10) + 1 ) * 10;
     }
     
     [self.timeSlider setValue:val animated:YES];
@@ -168,16 +168,55 @@ const static NSInteger kRoundingDistance = 2;
     }
     
     else if(sender==_easySwitch) {
-        [Constants setEasy:_easySwitch.isOn];
+        if([self atLeastOneDictionaryEnabled]) {
+            [Constants setEasy:_easySwitch.isOn];
+        }
+        
+        else {
+            [_easySwitch setOn:!_easySwitch.isOn animated:YES];
+        }
     }
     
     else if(sender==_mediumSwitch) {
-        [Constants setModerate:_mediumSwitch.isOn];
+        if([self atLeastOneDictionaryEnabled]) {
+            [Constants setModerate:_mediumSwitch.isOn];
+        }
+        
+        else {
+            [_mediumSwitch setOn:!_mediumSwitch.isOn animated:YES];
+        }
     }
     
     else if(sender==_hardSwitch) {
-        [Constants setHard:_hardSwitch.isOn];
+        if([self atLeastOneDictionaryEnabled]) {
+            [Constants setHard:_hardSwitch.isOn];
+        }
+        
+        else {
+            [_hardSwitch setOn:!_hardSwitch.isOn animated:YES];
+        }
     }
+}
+
+- (BOOL) atLeastOneDictionaryEnabled
+{
+    BOOL wordsAvailable = _easySwitch.isOn || _mediumSwitch.isOn || _hardSwitch.isOn;
+    
+    if(!wordsAvailable) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry..."
+                                                                                 message:@"At least one dictionary must be enabled."
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Got it!"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+        
+        [alertController addAction:cancelAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    
+    return wordsAvailable;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

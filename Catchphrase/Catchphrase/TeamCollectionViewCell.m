@@ -24,13 +24,13 @@
 
 // Constraints
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomAreaHeightConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerLineViewHeightConstraint;
 
 // Margin Constraints
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusLeftConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusTopConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addedLabelHeightConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addedTopConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addedBottomConstraint;
 
 @end
 
@@ -56,7 +56,6 @@
     self.topArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
     self.bottomArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     self.dividerLineView.backgroundColor = [[Constants instance] LIGHT_LINE];
-    self.dividerLineViewHeightConstraint.constant = [Constants thinLineWidth];
     self.bottomAreaHeightConstraint.constant = [Constants controlBarHeight];
     
     // Status label
@@ -79,7 +78,10 @@
                                            size:[Constants smallBodyTextSize]];
     self.addedLabel.textColor = [[Constants instance] LIGHT_BLUE];
     self.addedLabel.backgroundColor = [UIColor whiteColor];
-    self.addedLabelHeightConstraint.constant = 0;
+    self.addedLabel.clipsToBounds = NO;
+    self.addedLabel.layer.masksToBounds = NO;
+    self.addedTopConstraint.constant = [Constants controlBarHeight];
+    self.addedBottomConstraint.constant = -[Constants controlBarHeight];
     
     // More button
     [self.moreButton setImage:[Constants moreHorizontal] forState:UIControlStateNormal];
@@ -107,7 +109,8 @@
 {
     [super setSelected:selected];
     
-    self.addedLabelHeightConstraint.constant = (selected) ? [Constants controlBarHeight] : 0;
+    self.addedTopConstraint.constant = (selected) ? 0 : [Constants controlBarHeight];
+    self.addedBottomConstraint.constant = (selected) ? 0 : -[Constants controlBarHeight];
     [self animateLayoutIfNeededWithBounce:YES
                                   options:0
                                animations:nil];
