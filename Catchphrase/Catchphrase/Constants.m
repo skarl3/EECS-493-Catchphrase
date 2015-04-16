@@ -57,10 +57,11 @@ static Constants* instance = nil;
             instance.EXTRA_LIGHT_YELLOW_BG = [UIColor colorWithRed:255/255.0 green:240/255.0 blue:200/255.0 alpha:1.0];
             instance.EXTRA_LIGHT_ORANGE_BG = [UIColor colorWithRed:255/255.0 green:200/255.0 blue:128/255.0 alpha:1.0];
             
-            instance.LIGHT_BG = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+            instance.LIGHT_BG = [UIColor colorWithRed:3/255.0 green:169/255.0 blue:244/255.0 alpha:0.6];
+            //instance.LIGHT_BG = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
             instance.DARK_BG = [UIColor colorWithRed:117/255.0 green:117/255.0 blue:117/255.0 alpha:1];
             
-            instance.EXTRA_LIGHT_TEXT = [UIColor colorWithRed:189/255.0 green:189/255.0 blue:189/255.0 alpha:1];
+            instance.EXTRA_LIGHT_TEXT = [UIColor colorWithRed:189/255.0 green:189/255.0 blue:189/255.0 alpha:0.8];
             instance.LIGHT_TEXT = [UIColor colorWithRed:97/255.0 green:97/255.0 blue:97/255.0 alpha:1];
             instance.DARK_TEXT = [UIColor colorWithRed:33/255.0 green:33/255.0 blue:33/255.0 alpha:1];
             
@@ -97,7 +98,7 @@ static Constants* instance = nil;
 + (CGFloat) controlBarHeight { return 36.0f; }
 + (CGFloat) thinLineWidth { return 0.5f; }
 + (CGFloat) thickLineWidth { return 2.0f; }
-+ (CGFloat) borderRadius { return 2.0f; }
++ (CGFloat) borderRadius { return 4.0f; }
 
 + (CGFloat) shadowOpacity { return 0.0f; }
 + (CGFloat) shadowRadius { return 0.0f; }
@@ -126,6 +127,16 @@ static Constants* instance = nil;
 + (UIImage*) settings
 {
     return [[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage*) add
+{
+    return [[UIImage imageNamed:@"add_circle_unfilled"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage*) close
+{
+    return [[UIImage imageNamed:@"close_circle_filled"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 

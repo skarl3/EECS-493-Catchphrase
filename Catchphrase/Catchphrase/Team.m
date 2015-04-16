@@ -61,11 +61,22 @@
 {
     NSInteger numWins = self.wonGames.count;
     NSInteger numLosses = self.lostGames.count;
-    NSInteger numInProgress = self.inProgressGames.count;
+    NSInteger numInProgress = 0;
+    NSInteger numTies = 0;
+    
+    for(Game *g in self.inProgressGames) {
+        if(g.game_finished) {
+            numTies++;
+        }
+        
+        else {
+            numInProgress++;
+        }
+    }
     
     NSMutableArray *components = [NSMutableArray new];
     
-    if(numWins==0 && numLosses==0 && numInProgress==0) {
+    if(numWins==0 && numLosses==0 && numInProgress==0 && numTies==0) {
         [components addObject:@"No games yet"];
     }
     
@@ -75,6 +86,10 @@
     
     if(numLosses!=0) {
         [components addObject:[NSString stringWithFormat:@"%lu loss%@", numLosses, (numLosses!=1) ? @"es" : @""]];
+    }
+    
+    if(numTies!=0) {
+        [components addObject:[NSString stringWithFormat:@"%lu tie%@", numTies, (numTies!=1) ? @"s" : @""]];
     }
     
     if(numInProgress!=0) {

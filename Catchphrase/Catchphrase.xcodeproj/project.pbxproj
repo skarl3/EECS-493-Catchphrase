@@ -24,6 +24,9 @@
 		342E1D661AC9B6D000DFD364 /* GenericCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342E1D651AC9B6D000DFD364 /* GenericCollectionViewCell.m */; };
 		34A928D81ACA0B62002EA7EA /* StartCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */; };
 		34B3B5701ACF58DB0062FB63 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B3B56F1ACF58DB0062FB63 /* Word.m */; };
+		34C6A12D1ADFEE6D00B68E9C /* ModalPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6A12A1ADFEE6D00B68E9C /* ModalPresentationController.m */; };
+		34C6A12E1ADFEE6D00B68E9C /* ModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6A12B1ADFEE6D00B68E9C /* ModalTransitionAnimator.m */; };
+		34C6A12F1ADFEE6D00B68E9C /* ModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C6A12C1ADFEE6D00B68E9C /* ModalTransitionDelegate.m */; };
 		34CF0FD41AC97D4E008DBF60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CF0FD31AC97D4E008DBF60 /* main.m */; };
 		34CF0FD71AC97D4E008DBF60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CF0FD61AC97D4E008DBF60 /* AppDelegate.m */; };
 		34CF0FE01AC97D4E008DBF60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34CF0FDE1AC97D4E008DBF60 /* Main.storyboard */; };
@@ -79,6 +82,12 @@
 		34A928D71ACA0B62002EA7EA /* StartCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCollectionViewController.m; sourceTree = "<group>"; };
 		34B3B56E1ACF58DB0062FB63 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
 		34B3B56F1ACF58DB0062FB63 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		34C6A1271ADFEE6D00B68E9C /* ModalPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalPresentationController.h; sourceTree = "<group>"; };
+		34C6A1281ADFEE6D00B68E9C /* ModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalTransitionAnimator.h; sourceTree = "<group>"; };
+		34C6A1291ADFEE6D00B68E9C /* ModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalTransitionDelegate.h; sourceTree = "<group>"; };
+		34C6A12A1ADFEE6D00B68E9C /* ModalPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalPresentationController.m; sourceTree = "<group>"; };
+		34C6A12B1ADFEE6D00B68E9C /* ModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalTransitionAnimator.m; sourceTree = "<group>"; };
+		34C6A12C1ADFEE6D00B68E9C /* ModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalTransitionDelegate.m; sourceTree = "<group>"; };
 		34CF0FCE1AC97D4E008DBF60 /* Catchphrase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catchphrase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF0FD21AC97D4E008DBF60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34CF0FD31AC97D4E008DBF60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -125,6 +134,7 @@
 		342E1D1F1AC97EA700DFD364 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				34C6A1301ADFEE7400B68E9C /* Transitions */,
 				342E1D5B1AC99FDA00DFD364 /* GridLayout.h */,
 				342E1D5C1AC99FDA00DFD364 /* GridLayout.m */,
 				342E1D641AC9B6D000DFD364 /* GenericCollectionViewCell.h */,
@@ -213,6 +223,19 @@
 				342E1D561AC993BE00DFD364 /* UIView+Additions.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		34C6A1301ADFEE7400B68E9C /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				34C6A1271ADFEE6D00B68E9C /* ModalPresentationController.h */,
+				34C6A1281ADFEE6D00B68E9C /* ModalTransitionAnimator.h */,
+				34C6A1291ADFEE6D00B68E9C /* ModalTransitionDelegate.h */,
+				34C6A12A1ADFEE6D00B68E9C /* ModalPresentationController.m */,
+				34C6A12B1ADFEE6D00B68E9C /* ModalTransitionAnimator.m */,
+				34C6A12C1ADFEE6D00B68E9C /* ModalTransitionDelegate.m */,
+			);
+			name = Transitions;
 			sourceTree = "<group>";
 		};
 		34CF0FC51AC97D4E008DBF60 = {
@@ -437,8 +460,11 @@
 				34CF0FD41AC97D4E008DBF60 /* main.m in Sources */,
 				342E1D401AC98BA300DFD364 /* Round.m in Sources */,
 				342E1D1E1AC97EA200DFD364 /* PlayViewController.m in Sources */,
+				34C6A12F1ADFEE6D00B68E9C /* ModalTransitionDelegate.m in Sources */,
+				34C6A12D1ADFEE6D00B68E9C /* ModalPresentationController.m in Sources */,
 				342E1D261AC97ED400DFD364 /* Constants.m in Sources */,
 				342E1D3A1AC9831C00DFD364 /* Model.m in Sources */,
+				34C6A12E1ADFEE6D00B68E9C /* ModalTransitionAnimator.m in Sources */,
 				342E1D661AC9B6D000DFD364 /* GenericCollectionViewCell.m in Sources */,
 				342E1D5D1AC99FDA00DFD364 /* GridLayout.m in Sources */,
 				342E1D491AC98BA400DFD364 /* Team.m in Sources */,

@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "GameCollectionViewCell.h"
 
-@interface GamesCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, GameCellDelegate>
+@interface GamesCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, GameCellDelegate, UITabBarControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedGamesController;
 

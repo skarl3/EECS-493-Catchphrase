@@ -37,10 +37,13 @@
 @property (strong, nonatomic) IBOutlet UISwitch *mediumSwitch;
 @property (strong, nonatomic) IBOutlet UISwitch *hardSwitch;
 
+@property (strong, nonatomic) CAGradientLayer *backgroundGradient;
+
 @end
 
 @implementation SettingsTableViewController
 
+const static CGFloat kHeaderHeight = 60.0;
 const static NSInteger kRoundingDistance = 2;
 
 - (void)viewDidLoad
@@ -48,7 +51,21 @@ const static NSInteger kRoundingDistance = 2;
     [super viewDidLoad];
     
     // UI setup
-    self.tableView.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
+    _backgroundGradient = [CAGradientLayer layer];
+    _backgroundGradient.bounds = self.view.bounds;
+    _backgroundGradient.anchorPoint = CGPointZero;
+    _backgroundGradient.colors = @[ (id)[[[Constants instance] LIGHT_BG] CGColor],
+                                    (id)[[[Constants instance] LIGHT_BLUE] CGColor]
+                                    ];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundView = [UIView new];
+    [self.tableView.backgroundView.layer insertSublayer:_backgroundGradient atIndex:0];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorColor = [UIColor clearColor];
+    //self.tableView.separatorEffect = [UIVibrancyEffect effectForBlurEffect:UIBlurEffectStyleExtraLight];
     
     self.timerLengthLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
     self.showTimerLabel.font = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
@@ -76,12 +93,14 @@ const static NSInteger kRoundingDistance = 2;
     self.scoreControlLabel.textColor = [[Constants instance] LIGHT_TEXT];
     
     // Control setup
+    self.timeSlider.tintColor = [[Constants instance] LIGHT_BLUE];
     self.timeSlider.minimumValue = 10.0f;
     self.timeSlider.maximumValue = 120.0f;
     [self.timeSlider addTarget:self
                         action:@selector(timerChangeEnded:)
               forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside)];
     
+    self.scoreStepper.tintColor = [[Constants instance] LIGHT_BLUE];
     [self.scoreStepper setMinimumValue:1.0];
     [self.scoreStepper setMaximumValue:50.0];
     
@@ -92,15 +111,20 @@ const static NSInteger kRoundingDistance = 2;
     self.scoreControlLabel.text = [NSString stringWithFormat:@"%d", (int)self.scoreStepper.value ];//[NSString stringWithFormat:@"%d round%@", (int)self.scoreStepper.value,
                                         //(self.scoreStepper.value==1) ? @"" : @"s"];
     self.vibrateSwitch.on = [Constants isVibrateOn];
+    self.vibrateSwitch.tintColor = [[Constants instance] LIGHT_BG];
+    self.vibrateSwitch.onTintColor = [[Constants instance] LIGHT_BLUE];
     self.showTimerSwitch.on = [Constants isShowTimerOn];
+    self.showTimerSwitch.tintColor = [[Constants instance] LIGHT_BG];
+    self.showTimerSwitch.onTintColor = [[Constants instance] LIGHT_BLUE];
     self.easySwitch.on = [Constants isEasyOn];
+    self.easySwitch.tintColor = [[Constants instance] LIGHT_BG];
+    self.easySwitch.onTintColor = [[Constants instance] LIGHT_BLUE];
     self.mediumSwitch.on = [Constants isModerateOn];
+    self.mediumSwitch.tintColor = [[Constants instance] LIGHT_BG];
+    self.mediumSwitch.onTintColor = [[Constants instance] LIGHT_BLUE];
     self.hardSwitch.on = [Constants isHardOn];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+    self.hardSwitch.tintColor = [[Constants instance] LIGHT_BG];
+    self.hardSwitch.onTintColor = [[Constants instance] LIGHT_BLUE];
 }
 
 - (IBAction)timerSliderChanged:(id)sender
@@ -156,6 +180,56 @@ const static NSInteger kRoundingDistance = 2;
     }
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.frame = CGRectMake(0, 0, 320, 20);
+    titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    titleLabel.font = [UIFont fontWithName:[Constants boldFont]
+                                      size:[Constants bodyTextSize]];
+    titleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    CGRect frame = titleLabel.frame;
+    frame.size.height = [titleLabel sizeThatFits:CGSizeMake(320, 0)].height;
+    titleLabel.frame = frame;
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView addSubview:titleLabel];
+    
+    [headerView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-space-[label]-space-|"
+                                                                        options:0
+                                                                        metrics:@{ @"space":@([Constants spacing]*2) }
+                                                                          views:@{ @"label":titleLabel }]];
+    
+    NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:headerView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:titleLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:[Constants spacing]];
+    [headerView addConstraint:bottom];
+    
+    return headerView;
+}
+
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    cell.selectedBackgroundView = [UIView new];
+    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(![self tableView:tableView titleForHeaderInSection:section] ||
+       [[self tableView:tableView titleForHeaderInSection:section] isEqualToString:@""]) {
+        return kHeaderHeight/4;
+    }
+    
+    return kHeaderHeight;
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -169,7 +243,6 @@ const static NSInteger kRoundingDistance = 2;
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://en.wikipedia.org/wiki/Catch_Phrase_%28game%29"]];
     }
     else if(indexPath.section==numSections-1 && indexPath.row==numRows-1) {
-        NSLog(@"User tapped delete all; show popup confirmation before proceeding.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Delete Everything"
                                                                                  message:@"Are you sure you want to delete all saved data? You can't undo this action."
                                                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -193,5 +266,21 @@ const static NSInteger kRoundingDistance = 2;
     }
 }
 
+#pragma mark - Transitions
+
+- (void) viewWillTransitionToSize:(CGSize)size
+        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    // Handle orientation changes
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+        _backgroundGradient.bounds = CGRectMake(0, 0, size.width, size.height);
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
 
 @end

@@ -15,10 +15,8 @@
 
 // Containers
 @property (strong, nonatomic) IBOutlet UIView *cardView;
-@property (strong, nonatomic) IBOutlet UIView *cardViewShadow;
 @property (strong, nonatomic) IBOutlet UIView *bottomArea;
 @property (strong, nonatomic) IBOutlet UIView *topArea;
-@property (strong, nonatomic) IBOutlet UIView *dividerLineView;
 
 // Labels
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
@@ -31,10 +29,6 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *teamTwoHeightConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *versusSizeConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomAreaHeightConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerLineViewHeightConstraint;
-
-// Margin Constraints
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *cardViewShadowBottomConstraint;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusLeftConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *statusBottomConstraint;
@@ -52,25 +46,19 @@
 
 - (void) awakeFromNib
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
     // Containers
-    self.cardView.backgroundColor = [UIColor whiteColor];
+    self.cardView.backgroundColor = [UIColor clearColor];
     self.cardView.layer.cornerRadius = [Constants borderRadius];
     self.cardView.layer.masksToBounds = YES;
     self.cardView.layer.shouldRasterize = YES;
     self.cardView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
-    self.cardViewShadowBottomConstraint.constant = -[Constants thinLineWidth];
-    self.cardViewShadow.backgroundColor = [[Constants instance] LIGHT_LINE];
-    self.cardViewShadow.layer.cornerRadius = [Constants borderRadius];
-    
-    self.topArea.backgroundColor = [UIColor whiteColor];
-    self.bottomArea.backgroundColor = [UIColor whiteColor];
-    self.dividerLineView.backgroundColor = [[Constants instance] LIGHT_LINE];
-    self.dividerLineViewHeightConstraint.constant = [Constants thinLineWidth];
+    self.topArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.bottomArea.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
     self.bottomAreaHeightConstraint.constant = [Constants controlBarHeight];
     
     // Status label
@@ -83,7 +71,7 @@
     
     // More button
     [self.moreButton setImage:[Constants moreHorizontal] forState:UIControlStateNormal];
-    self.moreButton.tintColor = [[Constants instance] EXTRA_LIGHT_TEXT];
+    self.moreButton.tintColor = [[[Constants instance] EXTRA_LIGHT_TEXT] colorWithAlphaComponent:0.8];
     
     // Team One
     self.teamOneLabel.font = [UIFont fontWithName:[Constants regFont]
@@ -113,6 +101,8 @@
     self.versusSizeConstraint.constant = [self.versusLabel sizeThatFits:CGSizeZero].width + ([Constants spacing] * 2);
     self.versusLabel.layer.cornerRadius = self.versusSizeConstraint.constant/2.0;
     self.versusLabel.layer.masksToBounds = YES;
+    self.versusLabel.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.versusLabel.layer.borderWidth = [Constants thickLineWidth];
 }
 
 - (IBAction) moreButtonTapped:(id)sender
@@ -172,9 +162,8 @@
 - (void) setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    
-    self.topArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
-    self.bottomArea.backgroundColor = (highlighted) ? [[Constants instance] EXTRA_LIGHT_BG] : [UIColor whiteColor];
+    self.topArea.backgroundColor = (highlighted) ? [UIColor colorWithWhite:1.0 alpha:0.8] : [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.bottomArea.backgroundColor = (highlighted) ? [UIColor colorWithWhite:1.0 alpha:0.8] : [UIColor colorWithWhite:1.0 alpha:0.6];
 }
 
 @end

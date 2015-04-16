@@ -16,6 +16,7 @@
 #import "Model.h"
 #import "Constants.h"
 #import "UIView+Additions.h"
+#import "ModalTransitionDelegate.h"
 
 @interface GamesCollectionViewController ()
 
@@ -27,6 +28,9 @@
 
 // Transition
 @property (nonatomic, strong) Game *destinationGame;
+@property (nonatomic) ModalTransitionDelegate* transitionDelegate;
+
+@property (strong, nonatomic) CAGradientLayer *backgroundGradient;
 
 @end
 
@@ -71,9 +75,19 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     
     // Tab bar
     self.tabBarController.tabBar.tintColor = [[Constants instance] LIGHT_BLUE];
+    self.tabBarController.delegate = self;
+    
+    _backgroundGradient = [CAGradientLayer layer];
+    _backgroundGradient.bounds = self.view.bounds;
+    _backgroundGradient.anchorPoint = CGPointZero;
+    _backgroundGradient.colors = @[ (id)[[[Constants instance] LIGHT_BG] CGColor],
+                                    (id)[[[Constants instance] LIGHT_BLUE] CGColor]
+                                  ];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundView = [UIView new];
+    [self.collectionView.backgroundView.layer insertSublayer:_backgroundGradient atIndex:0];
     
     // View setup
-    self.collectionView.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
@@ -103,11 +117,51 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
 
 #pragma mark - Navigation
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    //tabBarController.tabBar.userInteractionEnabled = NO;
+    
+    NSArray *tabViewControllers = tabBarController.viewControllers;
+    UIView * sourceView = tabBarController.selectedViewController.view;
+    UIView * destinationView = viewController.view;
+    
+    if (sourceView == destinationView) {
+        return NO;
+    }
+    
+    NSUInteger fromIndex = [tabViewControllers indexOfObject:tabBarController.selectedViewController];
+    NSUInteger toIndex = [tabViewControllers indexOfObject:viewController];
+    NSInteger multiplier = (toIndex > fromIndex) ? -1 : 1;
+    
+    CGRect frame = tabBarController.view.bounds;
+    sourceView.frame = frame;
+    [tabBarController.view insertSubview:sourceView belowSubview:tabBarController.tabBar];
+    destinationView.frame = CGRectMake(-multiplier * CGRectGetWidth(frame), 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+    
+    [UIView animateWithBounce:YES
+                      options:0
+                     duration:ANIM_DURATION_BOUNCE
+                   animations:^{
+                       sourceView.frame = CGRectMake(multiplier * CGRectGetWidth(frame), 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+                       destinationView.frame = frame;
+                   }
+                   completion:^{
+                       [sourceView removeFromSuperview];
+                       tabBarController.selectedIndex = toIndex;
+                       //tabBarController.tabBar.userInteractionEnabled = YES;
+                   }];
+    return YES;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UIViewController *destination = [segue destinationViewController];
+    destination.transitioningDelegate = self.transitionDelegate;
+    destination.modalPresentationStyle = UIModalPresentationCustom;
+    destination.modalPresentationCapturesStatusBarAppearance = YES;
+    
     if([segue.identifier isEqualToString:SegueToPlayGameIdentifier] && _destinationGame) {
-        PlayViewController *destination = [segue destinationViewController];
-        destination.currentGame = _destinationGame;
+        ((PlayViewController*)destination).currentGame = _destinationGame;
     }
 }
 
@@ -410,6 +464,18 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     }
 }
 
+#pragma mark - Navigation
+
+- (ModalTransitionDelegate*) transitionDelegate
+{
+    if(!_transitionDelegate) {
+        _transitionDelegate = [ModalTransitionDelegate new];
+        
+    }
+    
+    return _transitionDelegate;
+}
+
 #pragma mark - Transitions
 
 - (void) viewWillTransitionToSize:(CGSize)size
@@ -422,6 +488,7 @@ static NSString * const NewGameCellIdentifier = @"NewGameCell";
     // Handle orientation changes
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
+        _backgroundGradient.bounds = CGRectMake(0, 0, size.width, size.height);
         [self.collectionView layoutIfNeeded];
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {

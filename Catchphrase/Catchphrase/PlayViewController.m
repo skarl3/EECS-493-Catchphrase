@@ -58,6 +58,8 @@
 // Audio
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
+@property (strong, nonatomic) CAGradientLayer *backgroundGradient;
+
 @end
 
 @implementation PlayViewController
@@ -67,29 +69,42 @@
     [super viewDidLoad];
     
     // UI setup
-    self.view.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
+    _backgroundGradient = [CAGradientLayer layer];
+    _backgroundGradient.bounds = self.view.bounds;
+    _backgroundGradient.anchorPoint = CGPointZero;
+    _backgroundGradient.colors = @[ (id)[[[Constants instance] LIGHT_BG] CGColor],
+                                    (id)[[[Constants instance] LIGHT_BLUE] CGColor]
+                                    ];
+    [self.view.layer insertSublayer:_backgroundGradient atIndex:0];
+    
     _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants boldFont]
                                                         size:[Constants titleTextSize]];
     _startRoundButton.titleLabel.numberOfLines = 0;
     _startRoundButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _startRoundButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [_startRoundButton setTitleColor:[[Constants instance] LIGHT_BLUE]
+    [_startRoundButton setTitleColor:[UIColor whiteColor]
                             forState:UIControlStateNormal];
     
     _timeRemainingLabel.font = [UIFont fontWithName:[Constants lightFont]
                                                size:[Constants timerTextSize]];
-    _timeRemainingLabel.textColor = [[Constants instance] LIGHT_TEXT];
+    _timeRemainingLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     _timeRemainingLabel.hidden = ![Constants isShowTimerOn];
     
     _centralLabel.font = [UIFont fontWithName:[Constants boldFont]
                                         size:[Constants bigWordSize]];
-    _centralLabel.textColor = [[Constants instance] LIGHT_TEXT];
+    _centralLabel.textColor = [UIColor whiteColor];
     _centralLabel.alpha = 0;
     /*_centralLabel.numberOfLines = 0;
     _centralLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _centralLabel.minimumScaleFactor = .5;
     _centralLabelHeightConstraint.constant = 0;
     _centralLabelWidthConstraint.constant = 0;*/ //setup in storyboard
+    
+    [_closeButton setImage:[Constants close] forState:UIControlStateNormal];
+    _closeButton.imageView.tintColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    
+    [_menuButton setImage:[Constants moreVertical] forState:UIControlStateNormal];
+    _menuButton.imageView.tintColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     
     _teamOneScore.numberOfLines = 0;
     _teamOneScore.lineBreakMode = NSLineBreakByWordWrapping;
@@ -159,8 +174,8 @@
     
     UIFont *boldFont = [UIFont fontWithName:[Constants boldFont] size:[Constants titleTextSize]];
     UIFont *regularFont = [UIFont fontWithName:[Constants lightFont] size:[Constants subTitleTextSize]];
-    UIColor *foregroundColor = [[Constants instance] DARK_TEXT];
-    UIColor *backgroundColor = [[Constants instance] LIGHT_TEXT];
+    UIColor *foregroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    UIColor *backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];
     
     NSDictionary *attrs = @{ NSFontAttributeName: boldFont, NSForegroundColorAttributeName: foregroundColor };
     NSDictionary *subAttrs = @{ NSFontAttributeName: regularFont, NSForegroundColorAttributeName: backgroundColor };
@@ -201,7 +216,7 @@
                             ? [NSString stringWithFormat:@"%@ won", self.currentGame.winningPlayer.team_name]
                             : @"Tie! Guess you'll have to rematch...";
 
-    _centralLabel.textColor = [[Constants instance] LIGHT_TEXT];
+    _centralLabel.textColor = [UIColor whiteColor];
     _centralLabel.alpha = 0;
     _centralLabelHeightConstraint.constant = [_centralLabel sizeThatFits:CGSizeMake(FWIDTH*3.0f/4.0f, 0)].height;
     _centralLabelWidthConstraint.constant = FWIDTH*3.0f/4.0f;
@@ -248,7 +263,7 @@
                                         _startRoundButton.enabled = YES;
                                         _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants boldFont]
                                                                                             size:[Constants titleTextSize]];
-                                        [_startRoundButton setTitleColor:[[Constants instance] LIGHT_BLUE]
+                                        [_startRoundButton setTitleColor:[UIColor whiteColor]
                                                                 forState:UIControlStateNormal];
                                         [_startRoundButton setTitle:@"Tap to start the next round!"
                                                            forState:UIControlStateNormal];
@@ -272,9 +287,9 @@
                                        options:0
                                     animations:^{
                                         _startRoundButton.enabled = NO;
-                                        _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants regFont]
+                                        _startRoundButton.titleLabel.font = [UIFont fontWithName:[Constants lightFont]
                                                                                             size:[Constants subTitleTextSize]];
-                                        [_startRoundButton setTitleColor:[[Constants instance] EXTRA_LIGHT_TEXT]
+                                        [_startRoundButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.4]
                                                                 forState:UIControlStateNormal];
                                         [_startRoundButton setTitle:@"Swipe for a new word"
                                                            forState:UIControlStateNormal];
@@ -319,11 +334,11 @@
 - (void) generateNewWord
 {
     [_centralLabel layoutIfNeeded];
-    _centralLabel.textColor = [[Constants instance] LIGHT_BLUE];
+    _centralLabel.textColor = [UIColor whiteColor];
     float directionMultiplier = _didSwipeLeft ? 1.0f : -1.0f;
     float animDuration = 0.3;
     
-    _centerLabelCenterXConstraint.constant = [Constants spacing] * directionMultiplier;
+    _centerLabelCenterXConstraint.constant = [Constants spacing] * 2 * directionMultiplier;
     
     [_centralLabel animateLayoutIfNeededWithDuration:animDuration
                                               bounce:YES
@@ -332,7 +347,7 @@
                                               _centralLabel.alpha = 0;
                                           }
                                           completion:^{
-                                              _centerLabelCenterXConstraint.constant = -[Constants spacing] * directionMultiplier;
+                                              _centerLabelCenterXConstraint.constant = -[Constants spacing] * 2 * directionMultiplier;
                                               _centralLabel.text = [[Word wordManager] wordFromEasy:[Constants isEasyOn]
                                                                                           andMedium:[Constants isModerateOn]
                                                                                             andHard:[Constants isHardOn]];
@@ -528,6 +543,7 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
         [self.view layoutIfNeeded];
+        _backgroundGradient.bounds = CGRectMake(0, 0, size.width, size.height);
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         

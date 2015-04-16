@@ -28,6 +28,8 @@
 // Transition
 @property (nonatomic, strong) Team *destinationTeam;
 
+@property (strong, nonatomic) CAGradientLayer *backgroundGradient;
+
 @end
 
 @implementation TeamsCollectionViewController
@@ -66,8 +68,17 @@
 {
     [super viewDidLoad];
     
+    _backgroundGradient = [CAGradientLayer layer];
+    _backgroundGradient.bounds = self.view.bounds;
+    _backgroundGradient.anchorPoint = CGPointZero;
+    _backgroundGradient.colors = @[ (id)[[[Constants instance] LIGHT_BG] CGColor],
+                                    (id)[[[Constants instance] LIGHT_BLUE] CGColor]
+                                    ];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundView = [UIView new];
+    [self.collectionView.backgroundView.layer insertSublayer:_backgroundGradient atIndex:0];
+    
     // View setup
-    self.collectionView.backgroundColor = [[Constants instance] EXTRA_LIGHT_YELLOW_BG];
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
@@ -476,6 +487,7 @@
     // Handle orientation changes
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
+        _backgroundGradient.bounds = CGRectMake(0, 0, size.width, size.height);
         [self.collectionView layoutIfNeeded];
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {

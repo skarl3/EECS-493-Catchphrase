@@ -107,6 +107,8 @@ extern NSInteger const kMaxTeamNameLength;
 + (UIImage*) moreHorizontal;
 + (UIImage*) moreVertical;
 + (UIImage*) settings;
++ (UIImage*) add;
++ (UIImage*) close;
 
 
 /*
