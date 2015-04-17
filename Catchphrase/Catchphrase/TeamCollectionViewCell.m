@@ -111,9 +111,12 @@
     
     self.addedTopConstraint.constant = (selected) ? 0 : [Constants controlBarHeight];
     self.addedBottomConstraint.constant = (selected) ? 0 : -[Constants controlBarHeight];
-    [self animateLayoutIfNeededWithBounce:YES
+    [self animateLayoutIfNeededWithBounce:NO
                                   options:0
-                               animations:nil];
+                               animations:^{
+                                   self.topArea.backgroundColor = (selected) ? [UIColor whiteColor] : [UIColor colorWithWhite:1.0 alpha:0.6];
+                                   self.bottomArea.backgroundColor = (selected) ? [UIColor whiteColor] : [UIColor colorWithWhite:1.0 alpha:0.8];
+                               }];
 }
 
 - (void) setHighlighted:(BOOL)highlighted
