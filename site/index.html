@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Catchphrase App - EECS 493</title>
+
+  <!-- CSS  -->
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style>
+  .slider .indicators .indicator-item.active {
+  	background-color: #ff9800;
+  }
+  </style>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Catchphrase!</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#about">About</a></li>
+        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+      
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#about">About</a></li>
+        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">Catchphrase!</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">An iOS app for EECS 493</h5>
+        <h5 class="header col s12 light"><small>Nick Gerard, Braden Schmidt, Scott Karl, & Kurt Jensen</small></h5>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s12 m12">
+        	  <h4>The Game</h4>
+				<p>We have created a mobile version of the popular party game <a href="http://en.wikipedia.org/wiki/Catch_Phrase_%28game%29">Catchphrase</a>.</p>
+				<p>Catchphrase is usually played in groups (4+ people), on two teams, and the objective is to get your team to guess the word on the screen (by saying clues that do not include the actual word or rhyme with it). When the word is guessed correctly, the device is passed to the next person, and when the timer runs out, the team that is <b>not</b> holding the device wins the round.</p>
+		</div>
+	  </div> 
+    </div>
+  </div>
+  
+  <div class="container">
+    <div id="about" class="section scrollspy">
+      <div class="row">
+        <div class="col s12 m12">
+        	  <h4>The App</h4>
+			  	<p>Built for iOS. Optimized for any size iPhone, iPod touch, and iPad, and can be used in both landscape and portrait.</p>
+				<p>Our app allows for the creation of different teams and games, with customizable settings. The actual gameplay is an intuitive interface of the word and timer (optionally visible), and the next word is shown with a simple swipe gesture and animation. When the round is near completion, the device vibrates, and a "time's up" sound plays when it is over and the user is prompted to record who won.</p>
+        </div>
+      </div>  
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m3">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><img src="images/portrait1.jpg" class="responsive-img materialboxed"/></h2>
+            <h5 class="center">Game Lobby</h5>
+
+            <p class="light">The game lobby grid allows the user to view ongoing games or create a new game.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m3">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><img src="images/portrait2.jpg" class="responsive-img materialboxed"/></h2>
+            <h5 class="center">Teams</h5>
+
+            <p class="light">The team grid allows the user to create a new game or view performance history and team stats.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m3">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><img src="images/portrait3.jpg" class="responsive-img materialboxed"/></h2>
+            <h5 class="center">Settings</h5>
+
+            <p class="light">The settings view allows the user to change the word library, customize the timer, set the number of rounds, delete all data, and view game rules.</p>
+          </div>
+        </div>
+        
+        <div class="col s12 m3">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><img src="images/portrait4.jpg" class="responsive-img materialboxed"/></h2>
+            <h5 class="center">Gameplay</h5>
+
+            <p class="light">The game view allows the user to swipe to change words. Sounds/Vibrations signal the end of the round and a menu appears for easy scoring.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  
+  <div class="container">
+    <div id="screenshots" class="section scrollspy">
+      <div class="row">
+        	  <h4 class="header center">Screenshots</h4>
+        <div class="col s12 m12">  
+  
+	<div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="images/landscape1.png" class="responsive-img"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="light orange-text">Create Teams</h3>
+          <h5 class="light orange-text text-lighten-3">Just choose a team name</h5>
+        </div>
+      </li>
+      <li>
+        <img src="images/landscape2.png" class="responsive-img">
+        <div class="caption left-align">
+          <h3 class="light orange-text">Gameplay</h3>
+          <h5 class="light orange-text text-lighten-3">Swipe to change words, Sound alerts for end of round</h5>
+        </div>
+      </li>
+      <li>
+        <img src="images/landscape3.png" class="responsive-img">
+        <div class="caption right-align">
+          <h3 class="light orange-text">Games</h3>
+          <h5 class="light orange-text text-lighten-3">Continue games in progress or start a new one</h5>
+        </div>
+      </li>
+      <li>
+        <img src="images/landscape4.png" class="responsive-img">
+        <div class="caption center-align">
+          <h3 class="light orange-text">Team Options</h3>
+          <h5 class="light orange-text text-lighten-3"></h5>
+        </div>
+      </li>
+      <li>
+        <img src="images/landscape5.png" class="responsive-img">
+        <div class="caption center-align">
+          <h3 class="light orange-text">Custom Settings</h3>
+          <h5 class="light orange-text text-lighten-3">Customize timers, rounds, words, etc</h5>
+        </div>
+      </li>
+      <li>
+        <img src="images/landscape6.png" class="responsive-img">
+        <div class="caption center-align">
+          <h3 class="light orange-text">Game Lobby</h3>
+          <h5 class="light orange-text text-lighten-3">Choose two teams and play</h5>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
+          </div>
+      </div>
+   </div>
+  </div>
+  
+  <div class="container">
+    <div id="download" class="section scrollspy">
+      <div class="row">
+        	  <h4 class="header center">Download</h4>
+        <div class="col s12 m12">
+        	      <div class="row center">
+				  </div>
+        	      <div class="row center">
+
+					<a id="download-button" class="btn-large waves-effect waves-light blue" onclick="Materialize.toast('Currently Unavailable', 4000)">App Store</a>
+					<a href="https://github.com/skarl3/EECS-493-Catchphrase/archive/master.zip" id="download-button" class="btn-large waves-effect waves-light orange">Github repo</a>
+				  </div>
+				  <br><br>
+        </div>
+      </div>
+   </div>
+  </div>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l3 s12">
+        	<img src="images/app_icon.png" class="responsive-img">
+        </div>
+        <div class="col l6 s12">
+          <h5 class="white-text">About</h5>
+          <p class="grey-text text-lighten-4">This app was created for EECS 493 (UI Development) at the University of Michigan in Winter 2015.</p>
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Team</h5>
+          <ul>
+            <li class="white-text">Nick Gerard (gerardn)</li>
+            <li class="white-text">Braden Schmidt (bradenrs)</li>
+            <li class="white-text">Scott Karl (skarl)</li>
+            <li class="white-text">Kurt Jensen (kajensen)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  
+  <script>
+  $(document).ready(function(){
+      $('.slider').slider({'height':600});
+	    $('.scrollspy').scrollSpy();
+    });
+    </script>
+
+  </body>
+</html>
